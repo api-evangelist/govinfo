@@ -1,0 +1,105 @@
+rules:
+  apis-json-aid-required:
+    severity: error
+    given: $
+    then: {field: aid, function: truthy}
+  apis-json-name-required:
+    severity: error
+    given: $
+    then: {field: name, function: truthy}
+  apis-json-description-required:
+    severity: error
+    given: $
+    then: {field: description, function: truthy}
+  apis-json-url-required:
+    severity: error
+    given: $
+    then: {field: url, function: truthy}
+  apis-json-type-required:
+    severity: warn
+    given: $
+    then: {field: type, function: truthy}
+  apis-json-tags-required:
+    severity: warn
+    given: $
+    then: {field: tags, function: truthy}
+  apis-json-created-required:
+    severity: warn
+    given: $
+    then: {field: created, function: truthy}
+  apis-json-modified-required:
+    severity: warn
+    given: $
+    then: {field: modified, function: truthy}
+  apis-json-specification-version-required:
+    severity: warn
+    given: $
+    then: {field: specificationVersion, function: truthy}
+  apis-json-apis-required:
+    severity: error
+    given: $
+    then: {field: apis, function: truthy}
+  apis-json-apis-aid-required:
+    severity: error
+    given: $.apis[*]
+    then: {field: aid, function: truthy}
+  apis-json-apis-name-required:
+    severity: error
+    given: $.apis[*]
+    then: {field: name, function: truthy}
+  apis-json-apis-description-required:
+    severity: warn
+    given: $.apis[*]
+    then: {field: description, function: truthy}
+  apis-json-apis-baseURL-required:
+    severity: warn
+    given: $.apis[*]
+    then: {field: baseURL, function: truthy}
+  apis-json-apis-humanURL-required:
+    severity: warn
+    given: $.apis[*]
+    then: {field: humanURL, function: truthy}
+  apis-json-apis-properties-url-required:
+    severity: warn
+    given: $.apis[*].properties[*]
+    then: {field: url, function: truthy}
+  apis-json-apis-properties-type-required:
+    severity: warn
+    given: $.apis[*].properties[*]
+    then: {field: type, function: truthy}
+  apis-json-maintainers-required:
+    severity: error
+    given: $
+    then: {field: maintainers, function: truthy}
+  apis-json-maintainers-fn-required:
+    severity: error
+    given: $.maintainers[*]
+    then: {field: FN, function: truthy}
+  openapi-info-title-required:
+    severity: error
+    given: $.info
+    then: {field: title, function: truthy}
+  openapi-info-description-required:
+    severity: error
+    given: $.info
+    then: {field: description, function: truthy}
+  openapi-info-version-required:
+    severity: error
+    given: $.info
+    then: {field: version, function: truthy}
+  openapi-servers-defined:
+    severity: error
+    given: $
+    then: {field: servers, function: truthy}
+  openapi-servers-https-only:
+    severity: error
+    given: $.servers[*].url
+    then: {function: pattern, functionOptions: {match: "^https://"}}
+  openapi-operation-description-required:
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete]
+    then: {field: description, function: truthy}
+  openapi-operation-operationid-required:
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete]
+    then: {field: operationId, function: truthy}
