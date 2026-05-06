@@ -1,0 +1,1111 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GovInfo API
+  description: The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including
+    search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office.
+    Requires an api.data.gov API key.
+  tags:
+  - Govinfo
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: govinfo
+    baseUri: https://api.govinfo.gov
+    description: GovInfo API HTTP API.
+    authentication:
+      type: apikey
+      in: query
+      name: api_key
+      value: '{{GOVINFO_TOKEN}}'
+    resources:
+    - name: search
+      path: /search
+      operations:
+      - name: search
+        method: POST
+        description: This service can be used to query the GovInfo search engine and return results that are the equivalent
+          to what is returned by the main user interface. You can use field operators, such as congress, publishdate, branch,
+          and others to constru
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: related-accessid
+      path: /related/{accessId}
+      operations:
+      - name: relatedpackagedetails
+        method: GET
+        description: Get a list of relationships for a given accessId
+        inputParameters:
+        - name: accessId
+          in: path
+          type: string
+          required: true
+          description: The unique accessId (packageId or granuleId) for a given piece of GovInfo content
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: related-accessid-collection
+      path: /related/{accessId}/{collection}
+      operations:
+      - name: relatedversionsdetails
+        method: GET
+        description: Get a list of relationships for a given accessId
+        inputParameters:
+        - name: accessId
+          in: path
+          type: string
+          required: true
+          description: The unique accessId (packageId or granuleId) for a given piece of GovInfo content
+        - name: collection
+          in: path
+          type: string
+          required: true
+          description: CollectionCode associated with a given relationshp - e.g. BILLS would display all related Bill Versions
+        - name: granuleClass
+          in: query
+          type: string
+        - name: subGranuleClass
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: published-dateissuedstartdate
+      path: /published/{dateIssuedStartDate}
+      operations:
+      - name: getpackagesbydateissued
+        method: GET
+        description: Retrieve list of packages based on dateIssued value
+        inputParameters:
+        - name: dateIssuedStartDate
+          in: path
+          type: string
+          required: true
+          description: The earliest dateIssued requested - YYYY-MM-DD
+        - name: offsetMark
+          in: query
+          type: string
+          description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through
+            the results. For the first request, use * - for subsequent r
+        - name: offset
+          in: query
+          type: integer
+          description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+            and will be removed in the future. Please begin tra
+        - name: pageSize
+          in: query
+          type: integer
+          required: true
+          description: The number of records to return for a given request. Max value is 1000
+        - name: collection
+          in: query
+          type: string
+          required: true
+          description: comma-separated list of collections that you are requesting, e.g. https://api.govinfo.gov/published/2019-01-01/2019-12-31?offset=0&pageSize=100&collection=BILLS
+        - name: congress
+          in: query
+          type: string
+          description: congress number (e.g. 116)
+        - name: docClass
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories. The values vary from collection to
+            collection. For example, docClass in BILLS corresponds with
+        - name: billVersion
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories.
+        - name: modifiedSince
+          in: query
+          type: string
+          description: 'equivalent to the lastModifiedStartDate parameter in the collections service which is based on lastModified-
+            allows you to request only packages that have been '
+        - name: courtCode
+          in: query
+          type: string
+        - name: courtType
+          in: query
+          type: string
+        - name: state
+          in: query
+          type: string
+        - name: topic
+          in: query
+          type: string
+        - name: isGLP
+          in: query
+          type: boolean
+        - name: natureSuitCode
+          in: query
+          type: string
+        - name: natureSuit
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: published-dateissuedstartdate-dateissuedenddate
+      path: /published/{dateIssuedStartDate}/{dateIssuedEndDate}
+      operations:
+      - name: getpackagesbydateissued-1
+        method: GET
+        description: Retrieve list of packages based on dateIssued value range
+        inputParameters:
+        - name: dateIssuedStartDate
+          in: path
+          type: string
+          required: true
+          description: The earliest dateIssued requested - YYYY-MM-DD
+        - name: dateIssuedEndDate
+          in: path
+          type: string
+          required: true
+          description: The last dateIssued requested - YYYY-MM-DD
+        - name: offsetMark
+          in: query
+          type: string
+          description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through
+            the results. For the first request, use * - for subsequent r
+        - name: offset
+          in: query
+          type: integer
+          description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+            and will be removed in the future. Please begin tra
+        - name: pageSize
+          in: query
+          type: integer
+          required: true
+          description: The number of records to return for a given request. Max value is 1000
+        - name: collection
+          in: query
+          type: string
+          required: true
+          description: comma-separated list of collections that you are requesting, e.g. https://api.govinfo.gov/published/2019-01-01/2019-12-31?offset=0&pageSize=100&collection=BILLS
+        - name: congress
+          in: query
+          type: string
+          description: congress number (e.g. 116)
+        - name: docClass
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories. The values vary from collection to
+            collection. For example, docClass in BILLS corresponds with
+        - name: billVersion
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories.
+        - name: modifiedSince
+          in: query
+          type: string
+          description: 'equivalent to the lastModifiedStartDate parameter in the collections service which is based on lastModified-
+            allows you to request only packages that have been '
+        - name: courtCode
+          in: query
+          type: string
+        - name: courtType
+          in: query
+          type: string
+        - name: state
+          in: query
+          type: string
+        - name: topic
+          in: query
+          type: string
+        - name: natureSuitCode
+          in: query
+          type: string
+        - name: natureSuit
+          in: query
+          type: string
+        - name: isGLP
+          in: query
+          type: boolean
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: packages-packageid-summary
+      path: /packages/{packageId}/summary
+      operations:
+      - name: packagedetails
+        method: GET
+        description: Return json summary for specified package
+        inputParameters:
+        - name: packageId
+          in: path
+          type: string
+          required: true
+          description: 'The Package Id. Ex: CREC-2018-01-04'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: packages-packageid-granules
+      path: /packages/{packageId}/granules
+      operations:
+      - name: getgranulesforpackage
+        method: GET
+        description: Get a list of granules associated with a package
+        inputParameters:
+        - name: packageId
+          in: path
+          type: string
+          required: true
+          description: 'The Package Id. Ex: CREC-2018-01-04'
+        - name: offsetMark
+          in: query
+          type: string
+          description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through
+            the results. For the first request, use * - for subsequent r
+        - name: offset
+          in: query
+          type: integer
+          description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+            and will be removed in the future. Please begin tra
+        - name: pageSize
+          in: query
+          type: integer
+          required: true
+          description: The number of records to return for a given request. Max value is 1000
+        - name: md5
+          in: query
+          type: string
+          description: md5 hash value of the html content file - can be used to identify changes in individual granules for
+            the HOB and CRI collections.
+        - name: granuleClass
+          in: query
+          type: string
+          description: 'Filter the results by overarching collection-specific categories. The values vary from collection
+            to collection. For example, For example, granuleClass in CREC '
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: packages-packageid-granules-granuleid-summary
+      path: /packages/{packageId}/granules/{granuleId}/summary
+      operations:
+      - name: getgranulecontentdetail
+        method: GET
+        description: Return json summary for specified granule
+        inputParameters:
+        - name: packageId
+          in: path
+          type: string
+          required: true
+          description: 'The Package Id. Ex: CREC-2018-01-04'
+        - name: granuleId
+          in: path
+          type: string
+          required: true
+          description: The granule ID, e.g. CREC-2018-01-04-pt1-PgD7-2
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: collections
+      path: /collections
+      operations:
+      - name: getcollectionsummary
+        method: GET
+        description: Request list of collections. Response includes collectionCode,collectionName, package and granule counts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: collections-collection-lastmodifiedstartdate
+      path: /collections/{collection}/{lastModifiedStartDate}
+      operations:
+      - name: getmodifiedcollections
+        method: GET
+        description: Retrieve new or updated packages for a collection given a start date and time
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+          description: The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)
+        - name: lastModifiedStartDate
+          in: path
+          type: string
+          required: true
+          description: 'This is the start date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+        - name: offsetMark
+          in: query
+          type: string
+          description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through
+            the results. For the first request, use * - for subsequent r
+        - name: offset
+          in: query
+          type: integer
+          description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+            and will be removed in the future. Please begin tra
+        - name: pageSize
+          in: query
+          type: integer
+          required: true
+          description: The number of records to return for a given request. Max value is 1000
+        - name: congress
+          in: query
+          type: integer
+          description: Filters results by Congress, where applicable. For example 113 or 114.
+        - name: docClass
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories. The values vary from collection to
+            collection. For example, docClass in BILLS corresponds with
+        - name: billVersion
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories.
+        - name: courtCode
+          in: query
+          type: string
+        - name: courtType
+          in: query
+          type: string
+        - name: state
+          in: query
+          type: string
+        - name: topic
+          in: query
+          type: string
+        - name: isGLP
+          in: query
+          type: boolean
+        - name: natureSuitCode
+          in: query
+          type: string
+        - name: natureSuit
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: collections-collection-lastmodifiedstartdate-las
+      path: /collections/{collection}/{lastModifiedStartDate}/{lastModifiedEndDate}
+      operations:
+      - name: getmodifiedcollections-1
+        method: GET
+        description: Retrieve new or updated packages for a collection within a date range
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+          description: The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)
+        - name: lastModifiedStartDate
+          in: path
+          type: string
+          required: true
+          description: 'This is the start date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+        - name: lastModifiedEndDate
+          in: path
+          type: string
+          required: true
+          description: 'This is the end date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+        - name: offsetMark
+          in: query
+          type: string
+          description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through
+            the results. For the first request, use * - for subsequent r
+        - name: offset
+          in: query
+          type: integer
+          description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+            and will be removed in the future. Please begin tra
+        - name: pageSize
+          in: query
+          type: integer
+          required: true
+          description: The number of records to return for a given request. Max value is 1000
+        - name: docClass
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories. The values vary from collection to
+            collection. For example, docClass in BILLS corresponds with
+        - name: congress
+          in: query
+          type: integer
+          description: Filters results by Congress, where applicable. For example 113 or 114.
+        - name: billVersion
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories.
+        - name: courtCode
+          in: query
+          type: string
+        - name: courtType
+          in: query
+          type: string
+        - name: state
+          in: query
+          type: string
+        - name: topic
+          in: query
+          type: string
+        - name: isGLP
+          in: query
+          type: boolean
+        - name: natureSuitCode
+          in: query
+          type: string
+        - name: natureSuit
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: govinfo-rest
+    description: REST adapter for GovInfo API.
+    resources:
+    - path: /search
+      name: search
+      operations:
+      - method: POST
+        name: search
+        description: This service can be used to query the GovInfo search engine and return results that are the equivalent
+          to what is returned by the main user interface. You can use field operators, such as congress, publishdate, branch,
+          and others to constru
+        call: govinfo.search
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /related/{accessId}
+      name: relatedpackagedetails
+      operations:
+      - method: GET
+        name: relatedpackagedetails
+        description: Get a list of relationships for a given accessId
+        call: govinfo.relatedpackagedetails
+        with:
+          accessId: rest.accessId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /related/{accessId}/{collection}
+      name: relatedversionsdetails
+      operations:
+      - method: GET
+        name: relatedversionsdetails
+        description: Get a list of relationships for a given accessId
+        call: govinfo.relatedversionsdetails
+        with:
+          accessId: rest.accessId
+          collection: rest.collection
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /published/{dateIssuedStartDate}
+      name: getpackagesbydateissued
+      operations:
+      - method: GET
+        name: getpackagesbydateissued
+        description: Retrieve list of packages based on dateIssued value
+        call: govinfo.getpackagesbydateissued
+        with:
+          dateIssuedStartDate: rest.dateIssuedStartDate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /published/{dateIssuedStartDate}/{dateIssuedEndDate}
+      name: getpackagesbydateissued-1
+      operations:
+      - method: GET
+        name: getpackagesbydateissued-1
+        description: Retrieve list of packages based on dateIssued value range
+        call: govinfo.getpackagesbydateissued-1
+        with:
+          dateIssuedStartDate: rest.dateIssuedStartDate
+          dateIssuedEndDate: rest.dateIssuedEndDate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /packages/{packageId}/summary
+      name: packagedetails
+      operations:
+      - method: GET
+        name: packagedetails
+        description: Return json summary for specified package
+        call: govinfo.packagedetails
+        with:
+          packageId: rest.packageId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /packages/{packageId}/granules
+      name: getgranulesforpackage
+      operations:
+      - method: GET
+        name: getgranulesforpackage
+        description: Get a list of granules associated with a package
+        call: govinfo.getgranulesforpackage
+        with:
+          packageId: rest.packageId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /packages/{packageId}/granules/{granuleId}/summary
+      name: getgranulecontentdetail
+      operations:
+      - method: GET
+        name: getgranulecontentdetail
+        description: Return json summary for specified granule
+        call: govinfo.getgranulecontentdetail
+        with:
+          packageId: rest.packageId
+          granuleId: rest.granuleId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /collections
+      name: getcollectionsummary
+      operations:
+      - method: GET
+        name: getcollectionsummary
+        description: Request list of collections. Response includes collectionCode,collectionName, package and granule counts
+        call: govinfo.getcollectionsummary
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /collections/{collection}/{lastModifiedStartDate}
+      name: getmodifiedcollections
+      operations:
+      - method: GET
+        name: getmodifiedcollections
+        description: Retrieve new or updated packages for a collection given a start date and time
+        call: govinfo.getmodifiedcollections
+        with:
+          collection: rest.collection
+          lastModifiedStartDate: rest.lastModifiedStartDate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /collections/{collection}/{lastModifiedStartDate}/{lastModifiedEndDate}
+      name: getmodifiedcollections-1
+      operations:
+      - method: GET
+        name: getmodifiedcollections-1
+        description: Retrieve new or updated packages for a collection within a date range
+        call: govinfo.getmodifiedcollections-1
+        with:
+          collection: rest.collection
+          lastModifiedStartDate: rest.lastModifiedStartDate
+          lastModifiedEndDate: rest.lastModifiedEndDate
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: govinfo-mcp
+    transport: http
+    description: MCP adapter for GovInfo API for AI agent use.
+    tools:
+    - name: search
+      description: This service can be used to query the GovInfo search engine and return results that are the equivalent
+        to what is returned by the main user interface. You can use field operators, such as congress, publishdate, branch,
+        and others to constru
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: govinfo.search
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: relatedpackagedetails
+      description: Get a list of relationships for a given accessId
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: govinfo.relatedpackagedetails
+      with:
+        accessId: tools.accessId
+      inputParameters:
+      - name: accessId
+        type: string
+        description: The unique accessId (packageId or granuleId) for a given piece of GovInfo content
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: relatedversionsdetails
+      description: Get a list of relationships for a given accessId
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: govinfo.relatedversionsdetails
+      with:
+        accessId: tools.accessId
+        collection: tools.collection
+        granuleClass: tools.granuleClass
+        subGranuleClass: tools.subGranuleClass
+      inputParameters:
+      - name: accessId
+        type: string
+        description: The unique accessId (packageId or granuleId) for a given piece of GovInfo content
+        required: true
+      - name: collection
+        type: string
+        description: CollectionCode associated with a given relationshp - e.g. BILLS would display all related Bill Versions
+        required: true
+      - name: granuleClass
+        type: string
+        description: granuleClass
+      - name: subGranuleClass
+        type: string
+        description: subGranuleClass
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getpackagesbydateissued
+      description: Retrieve list of packages based on dateIssued value
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: govinfo.getpackagesbydateissued
+      with:
+        dateIssuedStartDate: tools.dateIssuedStartDate
+        offsetMark: tools.offsetMark
+        offset: tools.offset
+        pageSize: tools.pageSize
+        collection: tools.collection
+        congress: tools.congress
+        docClass: tools.docClass
+        billVersion: tools.billVersion
+        modifiedSince: tools.modifiedSince
+        courtCode: tools.courtCode
+        courtType: tools.courtType
+        state: tools.state
+        topic: tools.topic
+        isGLP: tools.isGLP
+        natureSuitCode: tools.natureSuitCode
+        natureSuit: tools.natureSuit
+      inputParameters:
+      - name: dateIssuedStartDate
+        type: string
+        description: The earliest dateIssued requested - YYYY-MM-DD
+        required: true
+      - name: offsetMark
+        type: string
+        description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the
+          results. For the first request, use * - for subsequent r
+      - name: offset
+        type: integer
+        description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+          and will be removed in the future. Please begin tra
+      - name: pageSize
+        type: integer
+        description: The number of records to return for a given request. Max value is 1000
+        required: true
+      - name: collection
+        type: string
+        description: comma-separated list of collections that you are requesting, e.g. https://api.govinfo.gov/published/2019-01-01/2019-12-31?offset=0&pageSize=100&collection=BILLS
+        required: true
+      - name: congress
+        type: string
+        description: congress number (e.g. 116)
+      - name: docClass
+        type: string
+        description: Filter the results by overarching collection-specific categories. The values vary from collection to
+          collection. For example, docClass in BILLS corresponds with
+      - name: billVersion
+        type: string
+        description: Filter the results by overarching collection-specific categories.
+      - name: modifiedSince
+        type: string
+        description: 'equivalent to the lastModifiedStartDate parameter in the collections service which is based on lastModified-
+          allows you to request only packages that have been '
+      - name: courtCode
+        type: string
+        description: courtCode
+      - name: courtType
+        type: string
+        description: courtType
+      - name: state
+        type: string
+        description: state
+      - name: topic
+        type: string
+        description: topic
+      - name: isGLP
+        type: boolean
+        description: isGLP
+      - name: natureSuitCode
+        type: string
+        description: natureSuitCode
+      - name: natureSuit
+        type: string
+        description: natureSuit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getpackagesbydateissued-1
+      description: Retrieve list of packages based on dateIssued value range
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: govinfo.getpackagesbydateissued-1
+      with:
+        dateIssuedStartDate: tools.dateIssuedStartDate
+        dateIssuedEndDate: tools.dateIssuedEndDate
+        offsetMark: tools.offsetMark
+        offset: tools.offset
+        pageSize: tools.pageSize
+        collection: tools.collection
+        congress: tools.congress
+        docClass: tools.docClass
+        billVersion: tools.billVersion
+        modifiedSince: tools.modifiedSince
+        courtCode: tools.courtCode
+        courtType: tools.courtType
+        state: tools.state
+        topic: tools.topic
+        natureSuitCode: tools.natureSuitCode
+        natureSuit: tools.natureSuit
+        isGLP: tools.isGLP
+      inputParameters:
+      - name: dateIssuedStartDate
+        type: string
+        description: The earliest dateIssued requested - YYYY-MM-DD
+        required: true
+      - name: dateIssuedEndDate
+        type: string
+        description: The last dateIssued requested - YYYY-MM-DD
+        required: true
+      - name: offsetMark
+        type: string
+        description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the
+          results. For the first request, use * - for subsequent r
+      - name: offset
+        type: integer
+        description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+          and will be removed in the future. Please begin tra
+      - name: pageSize
+        type: integer
+        description: The number of records to return for a given request. Max value is 1000
+        required: true
+      - name: collection
+        type: string
+        description: comma-separated list of collections that you are requesting, e.g. https://api.govinfo.gov/published/2019-01-01/2019-12-31?offset=0&pageSize=100&collection=BILLS
+        required: true
+      - name: congress
+        type: string
+        description: congress number (e.g. 116)
+      - name: docClass
+        type: string
+        description: Filter the results by overarching collection-specific categories. The values vary from collection to
+          collection. For example, docClass in BILLS corresponds with
+      - name: billVersion
+        type: string
+        description: Filter the results by overarching collection-specific categories.
+      - name: modifiedSince
+        type: string
+        description: 'equivalent to the lastModifiedStartDate parameter in the collections service which is based on lastModified-
+          allows you to request only packages that have been '
+      - name: courtCode
+        type: string
+        description: courtCode
+      - name: courtType
+        type: string
+        description: courtType
+      - name: state
+        type: string
+        description: state
+      - name: topic
+        type: string
+        description: topic
+      - name: natureSuitCode
+        type: string
+        description: natureSuitCode
+      - name: natureSuit
+        type: string
+        description: natureSuit
+      - name: isGLP
+        type: boolean
+        description: isGLP
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: packagedetails
+      description: Return json summary for specified package
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: govinfo.packagedetails
+      with:
+        packageId: tools.packageId
+      inputParameters:
+      - name: packageId
+        type: string
+        description: 'The Package Id. Ex: CREC-2018-01-04'
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getgranulesforpackage
+      description: Get a list of granules associated with a package
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: govinfo.getgranulesforpackage
+      with:
+        packageId: tools.packageId
+        offsetMark: tools.offsetMark
+        offset: tools.offset
+        pageSize: tools.pageSize
+        md5: tools.md5
+        granuleClass: tools.granuleClass
+      inputParameters:
+      - name: packageId
+        type: string
+        description: 'The Package Id. Ex: CREC-2018-01-04'
+        required: true
+      - name: offsetMark
+        type: string
+        description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the
+          results. For the first request, use * - for subsequent r
+      - name: offset
+        type: integer
+        description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+          and will be removed in the future. Please begin tra
+      - name: pageSize
+        type: integer
+        description: The number of records to return for a given request. Max value is 1000
+        required: true
+      - name: md5
+        type: string
+        description: md5 hash value of the html content file - can be used to identify changes in individual granules for
+          the HOB and CRI collections.
+      - name: granuleClass
+        type: string
+        description: 'Filter the results by overarching collection-specific categories. The values vary from collection to
+          collection. For example, For example, granuleClass in CREC '
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getgranulecontentdetail
+      description: Return json summary for specified granule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: govinfo.getgranulecontentdetail
+      with:
+        packageId: tools.packageId
+        granuleId: tools.granuleId
+      inputParameters:
+      - name: packageId
+        type: string
+        description: 'The Package Id. Ex: CREC-2018-01-04'
+        required: true
+      - name: granuleId
+        type: string
+        description: The granule ID, e.g. CREC-2018-01-04-pt1-PgD7-2
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcollectionsummary
+      description: Request list of collections. Response includes collectionCode,collectionName, package and granule counts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: govinfo.getcollectionsummary
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getmodifiedcollections
+      description: Retrieve new or updated packages for a collection given a start date and time
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: govinfo.getmodifiedcollections
+      with:
+        collection: tools.collection
+        lastModifiedStartDate: tools.lastModifiedStartDate
+        offsetMark: tools.offsetMark
+        offset: tools.offset
+        pageSize: tools.pageSize
+        congress: tools.congress
+        docClass: tools.docClass
+        billVersion: tools.billVersion
+        courtCode: tools.courtCode
+        courtType: tools.courtType
+        state: tools.state
+        topic: tools.topic
+        isGLP: tools.isGLP
+        natureSuitCode: tools.natureSuitCode
+        natureSuit: tools.natureSuit
+      inputParameters:
+      - name: collection
+        type: string
+        description: The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)
+        required: true
+      - name: lastModifiedStartDate
+        type: string
+        description: 'This is the start date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+        required: true
+      - name: offsetMark
+        type: string
+        description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the
+          results. For the first request, use * - for subsequent r
+      - name: offset
+        type: integer
+        description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+          and will be removed in the future. Please begin tra
+      - name: pageSize
+        type: integer
+        description: The number of records to return for a given request. Max value is 1000
+        required: true
+      - name: congress
+        type: integer
+        description: Filters results by Congress, where applicable. For example 113 or 114.
+      - name: docClass
+        type: string
+        description: Filter the results by overarching collection-specific categories. The values vary from collection to
+          collection. For example, docClass in BILLS corresponds with
+      - name: billVersion
+        type: string
+        description: Filter the results by overarching collection-specific categories.
+      - name: courtCode
+        type: string
+        description: courtCode
+      - name: courtType
+        type: string
+        description: courtType
+      - name: state
+        type: string
+        description: state
+      - name: topic
+        type: string
+        description: topic
+      - name: isGLP
+        type: boolean
+        description: isGLP
+      - name: natureSuitCode
+        type: string
+        description: natureSuitCode
+      - name: natureSuit
+        type: string
+        description: natureSuit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getmodifiedcollections-1
+      description: Retrieve new or updated packages for a collection within a date range
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: govinfo.getmodifiedcollections-1
+      with:
+        collection: tools.collection
+        lastModifiedStartDate: tools.lastModifiedStartDate
+        lastModifiedEndDate: tools.lastModifiedEndDate
+        offsetMark: tools.offsetMark
+        offset: tools.offset
+        pageSize: tools.pageSize
+        docClass: tools.docClass
+        congress: tools.congress
+        billVersion: tools.billVersion
+        courtCode: tools.courtCode
+        courtType: tools.courtType
+        state: tools.state
+        topic: tools.topic
+        isGLP: tools.isGLP
+        natureSuitCode: tools.natureSuitCode
+        natureSuit: tools.natureSuit
+      inputParameters:
+      - name: collection
+        type: string
+        description: The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)
+        required: true
+      - name: lastModifiedStartDate
+        type: string
+        description: 'This is the start date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+        required: true
+      - name: lastModifiedEndDate
+        type: string
+        description: 'This is the end date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+        required: true
+      - name: offsetMark
+        type: string
+        description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the
+          results. For the first request, use * - for subsequent r
+      - name: offset
+        type: integer
+        description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+          and will be removed in the future. Please begin tra
+      - name: pageSize
+        type: integer
+        description: The number of records to return for a given request. Max value is 1000
+        required: true
+      - name: docClass
+        type: string
+        description: Filter the results by overarching collection-specific categories. The values vary from collection to
+          collection. For example, docClass in BILLS corresponds with
+      - name: congress
+        type: integer
+        description: Filters results by Congress, where applicable. For example 113 or 114.
+      - name: billVersion
+        type: string
+        description: Filter the results by overarching collection-specific categories.
+      - name: courtCode
+        type: string
+        description: courtCode
+      - name: courtType
+        type: string
+        description: courtType
+      - name: state
+        type: string
+        description: state
+      - name: topic
+        type: string
+        description: topic
+      - name: isGLP
+        type: boolean
+        description: isGLP
+      - name: natureSuitCode
+        type: string
+        description: natureSuitCode
+      - name: natureSuit
+        type: string
+        description: natureSuit
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    GOVINFO_TOKEN: GOVINFO_TOKEN
