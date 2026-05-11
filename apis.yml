@@ -62,6 +62,13 @@ common:
     url: https://www.govinfo.gov/about/policies
   - type: PrivacyPolicy
     url: https://www.govinfo.gov/privacy
+  - type: Integrations
+    url: https://www.govinfo.gov/integrations
+integrations:
+  - name: GovInfo
+  - name: 'Icon: RSS'
+  - name: Government Publishing Office
+  - name: Core Trust Seal
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
