@@ -1,0 +1,88 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GovInfo API — Search
+  description: 'GovInfo API — Search. 1 operations. Lead operation: Search. Self-contained Naftiko capability covering one
+    Govinfo business surface.'
+  tags:
+  - Govinfo
+  - Search
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GOVINFO_API_KEY: GOVINFO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: openapi-search
+    baseUri: https://api.govinfo.gov
+    description: GovInfo API — Search business capability. Self-contained, no shared references.
+    resources:
+    - name: search
+      path: /search
+      operations:
+      - name: search
+        method: POST
+        description: This service can be used to query the GovInfo search engine and return results that are the equivalent
+          to what is returned by the main user interface. You can use field operators, such as congress, publishdate, branch,
+          and others to constru
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.GOVINFO_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: openapi-search-rest
+    port: 8080
+    description: REST adapter for GovInfo API — Search. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/search
+      name: search
+      description: REST surface for search.
+      operations:
+      - method: POST
+        name: search
+        description: This service can be used to query the GovInfo search engine and return results that are the equivalent
+          to what is returned by the main user interface. You can use field operators, such as congress, publishdate, branch,
+          and others to constru
+        call: openapi-search.search
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: openapi-search-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GovInfo API — Search. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: this-service-can-be-used
+      description: This service can be used to query the GovInfo search engine and return results that are the equivalent
+        to what is returned by the main user interface. You can use field operators, such as congress, publishdate, branch,
+        and others to constru
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: openapi-search.search
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

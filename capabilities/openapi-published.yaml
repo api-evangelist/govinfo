@@ -1,0 +1,309 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GovInfo API — Published
+  description: 'GovInfo API — Published. 2 operations. Lead operation: Retrieve list of packages based on dateIssued value.
+    Self-contained Naftiko capability covering one Govinfo business surface.'
+  tags:
+  - Govinfo
+  - Published
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GOVINFO_API_KEY: GOVINFO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: openapi-published
+    baseUri: https://api.govinfo.gov
+    description: GovInfo API — Published business capability. Self-contained, no shared references.
+    resources:
+    - name: published-dateIssuedStartDate
+      path: /published/{dateIssuedStartDate}
+      operations:
+      - name: getpackagesbydateissued
+        method: GET
+        description: Retrieve list of packages based on dateIssued value
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: dateIssuedStartDate
+          in: path
+          type: string
+          description: The earliest dateIssued requested - YYYY-MM-DD
+          required: true
+        - name: offsetMark
+          in: query
+          type: string
+          description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through
+            the results. For the first request, use * - for subsequent r
+        - name: offset
+          in: query
+          type: integer
+          description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+            and will be removed in the future. Please begin tra
+        - name: pageSize
+          in: query
+          type: integer
+          description: The number of records to return for a given request. Max value is 1000
+          required: true
+        - name: collection
+          in: query
+          type: string
+          description: comma-separated list of collections that you are requesting, e.g. https://api.govinfo.gov/published/2019-01-01/2019-12-31?offset=0&pageSize=100&collection=BILLS
+          required: true
+        - name: congress
+          in: query
+          type: string
+          description: congress number (e.g. 116)
+        - name: docClass
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories. The values vary from collection to
+            collection. For example, docClass in BILLS corresponds with
+        - name: billVersion
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories.
+        - name: modifiedSince
+          in: query
+          type: string
+          description: 'equivalent to the lastModifiedStartDate parameter in the collections service which is based on lastModified-
+            allows you to request only packages that have been '
+        - name: courtCode
+          in: query
+          type: string
+        - name: courtType
+          in: query
+          type: string
+        - name: state
+          in: query
+          type: string
+        - name: topic
+          in: query
+          type: string
+        - name: isGLP
+          in: query
+          type: boolean
+        - name: natureSuitCode
+          in: query
+          type: string
+        - name: natureSuit
+          in: query
+          type: string
+    - name: published-dateIssuedStartDate-dateIssuedEndDate
+      path: /published/{dateIssuedStartDate}/{dateIssuedEndDate}
+      operations:
+      - name: getpackagesbydateissued1
+        method: GET
+        description: Retrieve list of packages based on dateIssued value range
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: dateIssuedStartDate
+          in: path
+          type: string
+          description: The earliest dateIssued requested - YYYY-MM-DD
+          required: true
+        - name: dateIssuedEndDate
+          in: path
+          type: string
+          description: The last dateIssued requested - YYYY-MM-DD
+          required: true
+        - name: offsetMark
+          in: query
+          type: string
+          description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through
+            the results. For the first request, use * - for subsequent r
+        - name: offset
+          in: query
+          type: integer
+          description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+            and will be removed in the future. Please begin tra
+        - name: pageSize
+          in: query
+          type: integer
+          description: The number of records to return for a given request. Max value is 1000
+          required: true
+        - name: collection
+          in: query
+          type: string
+          description: comma-separated list of collections that you are requesting, e.g. https://api.govinfo.gov/published/2019-01-01/2019-12-31?offset=0&pageSize=100&collection=BILLS
+          required: true
+        - name: congress
+          in: query
+          type: string
+          description: congress number (e.g. 116)
+        - name: docClass
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories. The values vary from collection to
+            collection. For example, docClass in BILLS corresponds with
+        - name: billVersion
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories.
+        - name: modifiedSince
+          in: query
+          type: string
+          description: 'equivalent to the lastModifiedStartDate parameter in the collections service which is based on lastModified-
+            allows you to request only packages that have been '
+        - name: courtCode
+          in: query
+          type: string
+        - name: courtType
+          in: query
+          type: string
+        - name: state
+          in: query
+          type: string
+        - name: topic
+          in: query
+          type: string
+        - name: natureSuitCode
+          in: query
+          type: string
+        - name: natureSuit
+          in: query
+          type: string
+        - name: isGLP
+          in: query
+          type: boolean
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.GOVINFO_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: openapi-published-rest
+    port: 8080
+    description: REST adapter for GovInfo API — Published. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/published/{dateissuedstartdate}
+      name: published-dateissuedstartdate
+      description: REST surface for published-dateIssuedStartDate.
+      operations:
+      - method: GET
+        name: getpackagesbydateissued
+        description: Retrieve list of packages based on dateIssued value
+        call: openapi-published.getpackagesbydateissued
+        with:
+          dateIssuedStartDate: rest.dateIssuedStartDate
+          offsetMark: rest.offsetMark
+          offset: rest.offset
+          pageSize: rest.pageSize
+          collection: rest.collection
+          congress: rest.congress
+          docClass: rest.docClass
+          billVersion: rest.billVersion
+          modifiedSince: rest.modifiedSince
+          courtCode: rest.courtCode
+          courtType: rest.courtType
+          state: rest.state
+          topic: rest.topic
+          isGLP: rest.isGLP
+          natureSuitCode: rest.natureSuitCode
+          natureSuit: rest.natureSuit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/published/{dateissuedstartdate}/{dateissuedenddate}
+      name: published-dateissuedstartdate-dateissuedenddate
+      description: REST surface for published-dateIssuedStartDate-dateIssuedEndDate.
+      operations:
+      - method: GET
+        name: getpackagesbydateissued1
+        description: Retrieve list of packages based on dateIssued value range
+        call: openapi-published.getpackagesbydateissued1
+        with:
+          dateIssuedStartDate: rest.dateIssuedStartDate
+          dateIssuedEndDate: rest.dateIssuedEndDate
+          offsetMark: rest.offsetMark
+          offset: rest.offset
+          pageSize: rest.pageSize
+          collection: rest.collection
+          congress: rest.congress
+          docClass: rest.docClass
+          billVersion: rest.billVersion
+          modifiedSince: rest.modifiedSince
+          courtCode: rest.courtCode
+          courtType: rest.courtType
+          state: rest.state
+          topic: rest.topic
+          natureSuitCode: rest.natureSuitCode
+          natureSuit: rest.natureSuit
+          isGLP: rest.isGLP
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: openapi-published-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GovInfo API — Published. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: retrieve-list-packages-based-dateissued
+      description: Retrieve list of packages based on dateIssued value
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-published.getpackagesbydateissued
+      with:
+        dateIssuedStartDate: tools.dateIssuedStartDate
+        offsetMark: tools.offsetMark
+        offset: tools.offset
+        pageSize: tools.pageSize
+        collection: tools.collection
+        congress: tools.congress
+        docClass: tools.docClass
+        billVersion: tools.billVersion
+        modifiedSince: tools.modifiedSince
+        courtCode: tools.courtCode
+        courtType: tools.courtType
+        state: tools.state
+        topic: tools.topic
+        isGLP: tools.isGLP
+        natureSuitCode: tools.natureSuitCode
+        natureSuit: tools.natureSuit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-list-packages-based-dateissued-2
+      description: Retrieve list of packages based on dateIssued value range
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-published.getpackagesbydateissued1
+      with:
+        dateIssuedStartDate: tools.dateIssuedStartDate
+        dateIssuedEndDate: tools.dateIssuedEndDate
+        offsetMark: tools.offsetMark
+        offset: tools.offset
+        pageSize: tools.pageSize
+        collection: tools.collection
+        congress: tools.congress
+        docClass: tools.docClass
+        billVersion: tools.billVersion
+        modifiedSince: tools.modifiedSince
+        courtCode: tools.courtCode
+        courtType: tools.courtType
+        state: tools.state
+        topic: tools.topic
+        natureSuitCode: tools.natureSuitCode
+        natureSuit: tools.natureSuit
+        isGLP: tools.isGLP
+      outputParameters:
+      - type: object
+        mapping: $.

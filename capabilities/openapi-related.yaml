@@ -1,0 +1,141 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GovInfo API — Related
+  description: 'GovInfo API — Related. 2 operations. Lead operation: Get a list of relationships for a given accessId. Self-contained
+    Naftiko capability covering one Govinfo business surface.'
+  tags:
+  - Govinfo
+  - Related
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GOVINFO_API_KEY: GOVINFO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: openapi-related
+    baseUri: https://api.govinfo.gov
+    description: GovInfo API — Related business capability. Self-contained, no shared references.
+    resources:
+    - name: related-accessId
+      path: /related/{accessId}
+      operations:
+      - name: relatedpackagedetails
+        method: GET
+        description: Get a list of relationships for a given accessId
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accessId
+          in: path
+          type: string
+          description: The unique accessId (packageId or granuleId) for a given piece of GovInfo content
+          required: true
+    - name: related-accessId-collection
+      path: /related/{accessId}/{collection}
+      operations:
+      - name: relatedversionsdetails
+        method: GET
+        description: Get a list of relationships for a given accessId
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accessId
+          in: path
+          type: string
+          description: The unique accessId (packageId or granuleId) for a given piece of GovInfo content
+          required: true
+        - name: collection
+          in: path
+          type: string
+          description: CollectionCode associated with a given relationshp - e.g. BILLS would display all related Bill Versions
+          required: true
+        - name: granuleClass
+          in: query
+          type: string
+        - name: subGranuleClass
+          in: query
+          type: string
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.GOVINFO_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: openapi-related-rest
+    port: 8080
+    description: REST adapter for GovInfo API — Related. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/related/{accessid}
+      name: related-accessid
+      description: REST surface for related-accessId.
+      operations:
+      - method: GET
+        name: relatedpackagedetails
+        description: Get a list of relationships for a given accessId
+        call: openapi-related.relatedpackagedetails
+        with:
+          accessId: rest.accessId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/related/{accessid}/{collection}
+      name: related-accessid-collection
+      description: REST surface for related-accessId-collection.
+      operations:
+      - method: GET
+        name: relatedversionsdetails
+        description: Get a list of relationships for a given accessId
+        call: openapi-related.relatedversionsdetails
+        with:
+          accessId: rest.accessId
+          collection: rest.collection
+          granuleClass: rest.granuleClass
+          subGranuleClass: rest.subGranuleClass
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: openapi-related-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GovInfo API — Related. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-list-relationships-given-accessid
+      description: Get a list of relationships for a given accessId
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-related.relatedpackagedetails
+      with:
+        accessId: tools.accessId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-list-relationships-given-accessid-2
+      description: Get a list of relationships for a given accessId
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-related.relatedversionsdetails
+      with:
+        accessId: tools.accessId
+        collection: tools.collection
+        granuleClass: tools.granuleClass
+        subGranuleClass: tools.subGranuleClass
+      outputParameters:
+      - type: object
+        mapping: $.

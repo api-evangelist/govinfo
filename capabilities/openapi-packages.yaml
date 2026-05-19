@@ -1,0 +1,208 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GovInfo API — Packages
+  description: 'GovInfo API — Packages. 3 operations. Lead operation: Get a list of granules associated with a package. Self-contained
+    Naftiko capability covering one Govinfo business surface.'
+  tags:
+  - Govinfo
+  - Packages
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GOVINFO_API_KEY: GOVINFO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: openapi-packages
+    baseUri: https://api.govinfo.gov
+    description: GovInfo API — Packages business capability. Self-contained, no shared references.
+    resources:
+    - name: packages-packageId-granules
+      path: /packages/{packageId}/granules
+      operations:
+      - name: getgranulesforpackage
+        method: GET
+        description: Get a list of granules associated with a package
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: packageId
+          in: path
+          type: string
+          description: 'The Package Id. Ex: CREC-2018-01-04'
+          required: true
+        - name: offsetMark
+          in: query
+          type: string
+          description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through
+            the results. For the first request, use * - for subsequent r
+        - name: offset
+          in: query
+          type: integer
+          description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+            and will be removed in the future. Please begin tra
+        - name: pageSize
+          in: query
+          type: integer
+          description: The number of records to return for a given request. Max value is 1000
+          required: true
+        - name: md5
+          in: query
+          type: string
+          description: md5 hash value of the html content file - can be used to identify changes in individual granules for
+            the HOB and CRI collections.
+        - name: granuleClass
+          in: query
+          type: string
+          description: 'Filter the results by overarching collection-specific categories. The values vary from collection
+            to collection. For example, For example, granuleClass in CREC '
+    - name: packages-packageId-granules-granuleId-summary
+      path: /packages/{packageId}/granules/{granuleId}/summary
+      operations:
+      - name: getgranulecontentdetail
+        method: GET
+        description: Return json summary for specified granule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: packageId
+          in: path
+          type: string
+          description: 'The Package Id. Ex: CREC-2018-01-04'
+          required: true
+        - name: granuleId
+          in: path
+          type: string
+          description: The granule ID, e.g. CREC-2018-01-04-pt1-PgD7-2
+          required: true
+    - name: packages-packageId-summary
+      path: /packages/{packageId}/summary
+      operations:
+      - name: packagedetails
+        method: GET
+        description: Return json summary for specified package
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: packageId
+          in: path
+          type: string
+          description: 'The Package Id. Ex: CREC-2018-01-04'
+          required: true
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.GOVINFO_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: openapi-packages-rest
+    port: 8080
+    description: REST adapter for GovInfo API — Packages. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/packages/{packageid}/granules
+      name: packages-packageid-granules
+      description: REST surface for packages-packageId-granules.
+      operations:
+      - method: GET
+        name: getgranulesforpackage
+        description: Get a list of granules associated with a package
+        call: openapi-packages.getgranulesforpackage
+        with:
+          packageId: rest.packageId
+          offsetMark: rest.offsetMark
+          offset: rest.offset
+          pageSize: rest.pageSize
+          md5: rest.md5
+          granuleClass: rest.granuleClass
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/packages/{packageid}/granules/{granuleid}/summary
+      name: packages-packageid-granules-granuleid-summary
+      description: REST surface for packages-packageId-granules-granuleId-summary.
+      operations:
+      - method: GET
+        name: getgranulecontentdetail
+        description: Return json summary for specified granule
+        call: openapi-packages.getgranulecontentdetail
+        with:
+          packageId: rest.packageId
+          granuleId: rest.granuleId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/packages/{packageid}/summary
+      name: packages-packageid-summary
+      description: REST surface for packages-packageId-summary.
+      operations:
+      - method: GET
+        name: packagedetails
+        description: Return json summary for specified package
+        call: openapi-packages.packagedetails
+        with:
+          packageId: rest.packageId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: openapi-packages-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GovInfo API — Packages. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-list-granules-associated-package
+      description: Get a list of granules associated with a package
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-packages.getgranulesforpackage
+      with:
+        packageId: tools.packageId
+        offsetMark: tools.offsetMark
+        offset: tools.offset
+        pageSize: tools.pageSize
+        md5: tools.md5
+        granuleClass: tools.granuleClass
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: return-json-summary-specified-granule
+      description: Return json summary for specified granule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-packages.getgranulecontentdetail
+      with:
+        packageId: tools.packageId
+        granuleId: tools.granuleId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: return-json-summary-specified-package
+      description: Return json summary for specified package
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-packages.packagedetails
+      with:
+        packageId: tools.packageId
+      outputParameters:
+      - type: object
+        mapping: $.

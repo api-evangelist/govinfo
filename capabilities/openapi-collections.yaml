@@ -1,0 +1,327 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: GovInfo API — Collections
+  description: 'GovInfo API — Collections. 3 operations. Lead operation: Request list of collections. Response includes collectionCode,collectionName,
+    package and granule counts. Self-contained Naftiko capability covering one Govinfo business surface.'
+  tags:
+  - Govinfo
+  - Collections
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GOVINFO_API_KEY: GOVINFO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: openapi-collections
+    baseUri: https://api.govinfo.gov
+    description: GovInfo API — Collections business capability. Self-contained, no shared references.
+    resources:
+    - name: collections
+      path: /collections
+      operations:
+      - name: getcollectionsummary
+        method: GET
+        description: Request list of collections. Response includes collectionCode,collectionName, package and granule counts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: collections-collection-lastModifiedStartDate
+      path: /collections/{collection}/{lastModifiedStartDate}
+      operations:
+      - name: getmodifiedcollections
+        method: GET
+        description: Retrieve new or updated packages for a collection given a start date and time
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          description: The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)
+          required: true
+        - name: lastModifiedStartDate
+          in: path
+          type: string
+          description: 'This is the start date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+          required: true
+        - name: offsetMark
+          in: query
+          type: string
+          description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through
+            the results. For the first request, use * - for subsequent r
+        - name: offset
+          in: query
+          type: integer
+          description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+            and will be removed in the future. Please begin tra
+        - name: pageSize
+          in: query
+          type: integer
+          description: The number of records to return for a given request. Max value is 1000
+          required: true
+        - name: congress
+          in: query
+          type: integer
+          description: Filters results by Congress, where applicable. For example 113 or 114.
+        - name: docClass
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories. The values vary from collection to
+            collection. For example, docClass in BILLS corresponds with
+        - name: billVersion
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories.
+        - name: courtCode
+          in: query
+          type: string
+        - name: courtType
+          in: query
+          type: string
+        - name: state
+          in: query
+          type: string
+        - name: topic
+          in: query
+          type: string
+        - name: isGLP
+          in: query
+          type: boolean
+        - name: natureSuitCode
+          in: query
+          type: string
+        - name: natureSuit
+          in: query
+          type: string
+    - name: collections-collection-lastModifiedStartDate-lastModifiedEndDate
+      path: /collections/{collection}/{lastModifiedStartDate}/{lastModifiedEndDate}
+      operations:
+      - name: getmodifiedcollections1
+        method: GET
+        description: Retrieve new or updated packages for a collection within a date range
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          description: The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)
+          required: true
+        - name: lastModifiedStartDate
+          in: path
+          type: string
+          description: 'This is the start date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+          required: true
+        - name: lastModifiedEndDate
+          in: path
+          type: string
+          description: 'This is the end date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+          required: true
+        - name: offsetMark
+          in: query
+          type: string
+          description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through
+            the results. For the first request, use * - for subsequent r
+        - name: offset
+          in: query
+          type: integer
+          description: This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated
+            and will be removed in the future. Please begin tra
+        - name: pageSize
+          in: query
+          type: integer
+          description: The number of records to return for a given request. Max value is 1000
+          required: true
+        - name: docClass
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories. The values vary from collection to
+            collection. For example, docClass in BILLS corresponds with
+        - name: congress
+          in: query
+          type: integer
+          description: Filters results by Congress, where applicable. For example 113 or 114.
+        - name: billVersion
+          in: query
+          type: string
+          description: Filter the results by overarching collection-specific categories.
+        - name: courtCode
+          in: query
+          type: string
+        - name: courtType
+          in: query
+          type: string
+        - name: state
+          in: query
+          type: string
+        - name: topic
+          in: query
+          type: string
+        - name: isGLP
+          in: query
+          type: boolean
+        - name: natureSuitCode
+          in: query
+          type: string
+        - name: natureSuit
+          in: query
+          type: string
+    authentication:
+      type: apikey
+      key: api_key
+      value: '{{env.GOVINFO_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: openapi-collections-rest
+    port: 8080
+    description: REST adapter for GovInfo API — Collections. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/collections
+      name: collections
+      description: REST surface for collections.
+      operations:
+      - method: GET
+        name: getcollectionsummary
+        description: Request list of collections. Response includes collectionCode,collectionName, package and granule counts
+        call: openapi-collections.getcollectionsummary
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/collections/{collection}/{lastmodifiedstartdate}
+      name: collections-collection-lastmodifiedstartdate
+      description: REST surface for collections-collection-lastModifiedStartDate.
+      operations:
+      - method: GET
+        name: getmodifiedcollections
+        description: Retrieve new or updated packages for a collection given a start date and time
+        call: openapi-collections.getmodifiedcollections
+        with:
+          collection: rest.collection
+          lastModifiedStartDate: rest.lastModifiedStartDate
+          offsetMark: rest.offsetMark
+          offset: rest.offset
+          pageSize: rest.pageSize
+          congress: rest.congress
+          docClass: rest.docClass
+          billVersion: rest.billVersion
+          courtCode: rest.courtCode
+          courtType: rest.courtType
+          state: rest.state
+          topic: rest.topic
+          isGLP: rest.isGLP
+          natureSuitCode: rest.natureSuitCode
+          natureSuit: rest.natureSuit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/collections/{collection}/{lastmodifiedstartdate}/{lastmodifiedenddate}
+      name: collections-collection-lastmodifiedstartdate-lastmodifiedenddate
+      description: REST surface for collections-collection-lastModifiedStartDate-lastModifiedEndDate.
+      operations:
+      - method: GET
+        name: getmodifiedcollections1
+        description: Retrieve new or updated packages for a collection within a date range
+        call: openapi-collections.getmodifiedcollections1
+        with:
+          collection: rest.collection
+          lastModifiedStartDate: rest.lastModifiedStartDate
+          lastModifiedEndDate: rest.lastModifiedEndDate
+          offsetMark: rest.offsetMark
+          offset: rest.offset
+          pageSize: rest.pageSize
+          docClass: rest.docClass
+          congress: rest.congress
+          billVersion: rest.billVersion
+          courtCode: rest.courtCode
+          courtType: rest.courtType
+          state: rest.state
+          topic: rest.topic
+          isGLP: rest.isGLP
+          natureSuitCode: rest.natureSuitCode
+          natureSuit: rest.natureSuit
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: openapi-collections-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for GovInfo API — Collections. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: request-list-collections-response-includes
+      description: Request list of collections. Response includes collectionCode,collectionName, package and granule counts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-collections.getcollectionsummary
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-new-updated-packages-collection
+      description: Retrieve new or updated packages for a collection given a start date and time
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-collections.getmodifiedcollections
+      with:
+        collection: tools.collection
+        lastModifiedStartDate: tools.lastModifiedStartDate
+        offsetMark: tools.offsetMark
+        offset: tools.offset
+        pageSize: tools.pageSize
+        congress: tools.congress
+        docClass: tools.docClass
+        billVersion: tools.billVersion
+        courtCode: tools.courtCode
+        courtType: tools.courtType
+        state: tools.state
+        topic: tools.topic
+        isGLP: tools.isGLP
+        natureSuitCode: tools.natureSuitCode
+        natureSuit: tools.natureSuit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-new-updated-packages-collection-2
+      description: Retrieve new or updated packages for a collection within a date range
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-collections.getmodifiedcollections1
+      with:
+        collection: tools.collection
+        lastModifiedStartDate: tools.lastModifiedStartDate
+        lastModifiedEndDate: tools.lastModifiedEndDate
+        offsetMark: tools.offsetMark
+        offset: tools.offset
+        pageSize: tools.pageSize
+        docClass: tools.docClass
+        congress: tools.congress
+        billVersion: tools.billVersion
+        courtCode: tools.courtCode
+        courtType: tools.courtType
+        state: tools.state
+        topic: tools.topic
+        isGLP: tools.isGLP
+        natureSuitCode: tools.natureSuitCode
+        natureSuit: tools.natureSuit
+      outputParameters:
+      - type: object
+        mapping: $.
