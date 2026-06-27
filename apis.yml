@@ -35,7 +35,7 @@ apis:
         url: https://api.govinfo.gov/docs/
       - type: GettingStarted
         url: https://www.govinfo.gov/developers
-      - type: SignUp
+      - type: Signup
         url: https://www.govinfo.gov/api-signup
       - type: GitHub
         url: https://github.com/usgpo/api
@@ -48,7 +48,7 @@ common:
     url: https://www.govinfo.gov/developers
   - type: Documentation
     url: https://api.govinfo.gov/docs/
-  - type: SignUp
+  - type: Signup
     url: https://www.govinfo.gov/api-signup
   - type: GitHub
     url: https://github.com/usgpo/api
