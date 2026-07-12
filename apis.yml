@@ -42,6 +42,10 @@ apis:
       - type: OpenAPI
         url: openapi/openapi.yml
 common:
+  - type: DomainSecurity
+    url: security/govinfo-domain-security.yml
+  - type: Authentication
+    url: authentication/govinfo-authentication.yml
   - type: Portal
     url: https://www.govinfo.gov
   - type: DeveloperPortal
