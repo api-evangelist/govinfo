@@ -42,6 +42,8 @@ apis:
       - type: OpenAPI
         url: openapi/openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/govinfo-agentic-access.yml
   - type: DomainSecurity
     url: security/govinfo-domain-security.yml
   - type: Authentication
