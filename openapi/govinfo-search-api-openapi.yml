@@ -1,0 +1,130 @@
+openapi: 3.0.1
+info:
+  title: GovInfo Collections Search API
+  description: The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.
+  contact:
+    name: Developer Hub
+    url: https://github.com/usgpo/api
+  license:
+    name: License
+    url: https://github.com/usgpo/api/blob/master/LICENSE.md
+  version: '2.0'
+servers:
+- url: https://api.govinfo.gov
+  description: GovInfo API production server
+tags:
+- name: Search
+  description: Discover documents on GovInfo using search queries and field operators available in the GovInfo UI
+paths:
+  /search:
+    post:
+      tags:
+      - Search
+      description: This service can be used to query the GovInfo search engine and return results that are the equivalent to what is returned by the main user interface. You can use field operators, such as congress, publishdate, branch, and others to construct complex queries that will return only matching documents. For additional information, please see our <a href='https://www.govinfo.gov/features/search-service-overview' target='blank' style='text-decoration:underline'>search service overview</a>.
+      operationId: search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+            example:
+              query: Federal documents
+              pageSize: 10
+              offsetMark: '*'
+              sorts:
+              - field: relevancy
+                sortOrder: DESC
+              historical: true
+              resultLevel: default
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '404':
+          description: No Content found for a given search criteria
+        '400':
+          description: When the input request criteria is not following the spec
+        '500':
+          description: Any system failure while processing the search request /query
+      security:
+      - apiKeyScheme: []
+components:
+  schemas:
+    SearchResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResult'
+        offsetMark:
+          type: string
+        count:
+          type: integer
+          format: int32
+    SearchRequest:
+      type: object
+      properties:
+        query:
+          type: string
+        pageSize:
+          type: integer
+          format: int32
+        offsetMark:
+          type: string
+        sorts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sort'
+        historical:
+          type: boolean
+        resultLevel:
+          type: string
+    Sort:
+      type: object
+      properties:
+        field:
+          type: string
+        sortOrder:
+          type: string
+          enum:
+          - ASC
+          - DESC
+    SearchResult:
+      type: object
+      properties:
+        title:
+          type: string
+        packageId:
+          type: string
+        granuleId:
+          type: string
+        lastModified:
+          type: string
+        governmentAuthor:
+          type: array
+          items:
+            type: string
+        dateIssued:
+          type: string
+        collectionCode:
+          type: string
+        resultLink:
+          type: string
+        dateIngested:
+          type: string
+        download:
+          type: object
+          additionalProperties:
+            type: string
+        relatedLink:
+          type: string
+  securitySchemes:
+    apiKeyScheme:
+      type: apiKey
+      name: api_key
+      in: query

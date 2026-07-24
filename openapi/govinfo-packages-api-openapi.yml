@@ -1,0 +1,166 @@
+openapi: 3.0.1
+info:
+  title: GovInfo Collections Packages API
+  description: The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.
+  contact:
+    name: Developer Hub
+    url: https://github.com/usgpo/api
+  license:
+    name: License
+    url: https://github.com/usgpo/api/blob/master/LICENSE.md
+  version: '2.0'
+servers:
+- url: https://api.govinfo.gov
+  description: GovInfo API production server
+tags:
+- name: Packages
+  description: Return content and metadata for individual packages
+paths:
+  /packages/{packageId}/summary:
+    get:
+      tags:
+      - Packages
+      summary: Return json summary for specified package
+      operationId: packageDetails
+      parameters:
+      - name: packageId
+        in: path
+        description: 'The Package Id. Ex: CREC-2018-01-04'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+      - apiKeyScheme: []
+  /packages/{packageId}/granules:
+    get:
+      tags:
+      - Packages
+      summary: Get a list of granules associated with a package
+      operationId: getGranulesForPackage
+      parameters:
+      - name: packageId
+        in: path
+        description: 'The Package Id. Ex: CREC-2018-01-04'
+        required: true
+        schema:
+          type: string
+      - name: offsetMark
+        in: query
+        description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the results. For the first request, use * - for subsequent requests, this information will be provided in the nextPage field of the current response.
+        required: false
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: 'This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated and will be removed in the future. Please begin transitioning to use offsetMark instead. For more information see the deprecation warning announcement and discussion on this <a href="https://github.com/usgpo/api/issues/187" target="blank"> GitHub issue (usgpo/api #187) <i class="bi bi-github"></i></a>'
+        required: false
+        deprecated: true
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        description: The number of records to return for a given request. Max value is 1000
+        required: true
+        schema:
+          maximum: 1000
+          type: integer
+      - name: md5
+        in: query
+        description: md5 hash value of the html content file - can be used to identify changes in individual granules for the HOB and CRI collections.
+        required: false
+        schema:
+          type: string
+      - name: granuleClass
+        in: query
+        description: Filter the results by overarching collection-specific categories. The values vary from collection to collection. For example, For example, granuleClass in CREC corresponds with Congressional Record Section ---e.g. . DAILYDIGEST, EXTENSIONS, SENATE, HOUSE
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GranuleContainer'
+      security:
+      - apiKeyScheme: []
+  /packages/{packageId}/granules/{granuleId}/summary:
+    get:
+      tags:
+      - Packages
+      summary: Return json summary for specified granule
+      operationId: getGranuleContentDetail
+      parameters:
+      - name: packageId
+        in: path
+        description: 'The Package Id. Ex: CREC-2018-01-04'
+        required: true
+        schema:
+          type: string
+      - name: granuleId
+        in: path
+        description: The granule ID, e.g. CREC-2018-01-04-pt1-PgD7-2
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+      - apiKeyScheme: []
+components:
+  schemas:
+    GranuleMetadata:
+      type: object
+      properties:
+        title:
+          type: string
+        granuleId:
+          type: string
+        granuleLink:
+          type: string
+        dateIssued:
+          type: string
+        granuleClass:
+          type: string
+        md5:
+          type: string
+    GranuleContainer:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        nextPage:
+          type: string
+        previousPage:
+          type: string
+        granules:
+          type: array
+          items:
+            $ref: '#/components/schemas/GranuleMetadata'
+        message:
+          type: string
+  securitySchemes:
+    apiKeyScheme:
+      type: apiKey
+      name: api_key
+      in: query

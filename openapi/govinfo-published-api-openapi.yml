@@ -1,0 +1,405 @@
+openapi: 3.0.1
+info:
+  title: GovInfo Collections Published API
+  description: The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.
+  contact:
+    name: Developer Hub
+    url: https://github.com/usgpo/api
+  license:
+    name: License
+    url: https://github.com/usgpo/api/blob/master/LICENSE.md
+  version: '2.0'
+servers:
+- url: https://api.govinfo.gov
+  description: GovInfo API production server
+tags:
+- name: Published
+  description: Discover documents on GovInfo based on official publication date
+paths:
+  /published/{dateIssuedStartDate}:
+    get:
+      tags:
+      - Published
+      summary: Retrieve list of packages based on dateIssued value
+      operationId: getPackagesByDateIssued
+      parameters:
+      - name: dateIssuedStartDate
+        in: path
+        description: The earliest dateIssued requested - YYYY-MM-DD
+        required: true
+        schema:
+          pattern: \d{4}-\d{1,2}-\d{1,2}
+          type: string
+      - name: offsetMark
+        in: query
+        description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the results. For the first request, use * - for subsequent requests, this information will be provided in the nextPage field of the current response.
+        required: false
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: 'This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated and will be removed in the future. Please begin transitioning to use offsetMark instead. For more information see the deprecation warning announcement and discussion on this <a href="https://github.com/usgpo/api/issues/187" target="blank"> GitHub issue (usgpo/api #187) <i class="bi bi-github"></i></a>'
+        required: false
+        deprecated: true
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        description: The number of records to return for a given request. Max value is 1000
+        required: true
+        schema:
+          maximum: 1000
+          type: integer
+      - name: collection
+        in: query
+        description: comma-separated list of collections that you are requesting, e.g. https://api.govinfo.gov/published/2019-01-01/2019-12-31?offset=0&pageSize=100&collection=BILLS,BILLSTATUS&api_key=DEMO_KEY - see /collections for a list of collections by code and human-readable name.
+        required: true
+        schema:
+          type: string
+      - name: congress
+        in: query
+        description: congress number (e.g. 116)
+        required: false
+        schema:
+          type: string
+      - name: docClass
+        in: query
+        description: 'Filter the results by overarching collection-specific categories. The values vary from collection to collection. For example, docClass in BILLS corresponds with Bill Type --e.g. s, hr, hres, sconres. CREC (the Congressional Record) has docClass by CREC section: HOUSE, SENATE, DIGEST, and EXTENSIONS'
+        required: false
+        schema:
+          type: string
+      - name: billVersion
+        in: query
+        description: Filter the results by overarching collection-specific categories.
+        required: false
+        schema:
+          type: string
+          enum:
+          - as
+          - ash
+          - ath
+          - ats
+          - cdh
+          - cds
+          - cph
+          - cps
+          - eah
+          - eas
+          - eh
+          - enr
+          - eph
+          - es
+          - fah
+          - fph
+          - fps
+          - hdh
+          - hds
+          - ih
+          - iph
+          - ips
+          - is
+          - lth
+          - lts
+          - nat
+          - oph
+          - ops
+          - pap
+          - pav
+          - pch
+          - pcs
+          - pp
+          - pwah
+          - rah
+          - ras
+          - rch
+          - rcs
+          - rdh
+          - rds
+          - re
+          - reah
+          - renr
+          - res
+          - rfh
+          - rfs
+          - rft
+          - rh
+          - rhuc
+          - rih
+          - ris
+          - rs
+          - rth
+          - rts
+          - s_p
+          - sas
+          - sc
+          - mostrecent
+      - name: modifiedSince
+        in: query
+        description: equivalent to the lastModifiedStartDate parameter in the collections service which is based on lastModified- allows you to request only packages that have been modified since a given date/time - useful for tracking updates. Requires ISO 8601 format -- e.g. 2020-02-28T00:00:00Z
+        required: false
+        schema:
+          type: string
+      - name: courtCode
+        in: query
+        required: false
+        schema:
+          pattern: (?:AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FL|GA|GU|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PA|PR|RI|SC|SD|TN|TX|UT|VT|VA|VI|WA|WV|WI|WY)[n|e|w|s]?[d|b|a]|(cofc|jpml)
+          type: string
+      - name: courtType
+        in: query
+        required: false
+        schema:
+          pattern: District|Bankruptcy|Appellate|National
+          type: string
+      - name: state
+        in: query
+        required: false
+        schema:
+          pattern: AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FL|GA|GU|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PA|PR|RI|SC|SD|TN|TX|UT|VT|VA|VI|WA|WV|WI|WY
+          type: string
+      - name: topic
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: isGLP
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: natureSuitCode
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: natureSuit
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionContainer'
+      security:
+      - apiKeyScheme: []
+  /published/{dateIssuedStartDate}/{dateIssuedEndDate}:
+    get:
+      tags:
+      - Published
+      summary: Retrieve list of packages based on dateIssued value range
+      operationId: getPackagesByDateIssued_1
+      parameters:
+      - name: dateIssuedStartDate
+        in: path
+        description: The earliest dateIssued requested - YYYY-MM-DD
+        required: true
+        schema:
+          pattern: \d{4}-\d{1,2}-\d{1,2}
+          type: string
+      - name: dateIssuedEndDate
+        in: path
+        description: The last dateIssued requested - YYYY-MM-DD
+        required: true
+        schema:
+          pattern: \d{4}-\d{1,2}-\d{1,2}
+          type: string
+      - name: offsetMark
+        in: query
+        description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the results. For the first request, use * - for subsequent requests, this information will be provided in the nextPage field of the current response.
+        required: false
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: 'This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated and will be removed in the future. Please begin transitioning to use offsetMark instead. For more information see the deprecation warning announcement and discussion on this <a href="https://github.com/usgpo/api/issues/187" target="blank"> GitHub issue (usgpo/api #187) <i class="bi bi-github"></i></a>'
+        required: false
+        deprecated: true
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        description: The number of records to return for a given request. Max value is 1000
+        required: true
+        schema:
+          maximum: 1000
+          type: integer
+      - name: collection
+        in: query
+        description: comma-separated list of collections that you are requesting, e.g. https://api.govinfo.gov/published/2019-01-01/2019-12-31?offset=0&pageSize=100&collection=BILLS,BILLSTATUS&api_key=DEMO_KEY - see /collections for a list of collections by code and human-readable name.
+        required: true
+        schema:
+          type: string
+      - name: congress
+        in: query
+        description: congress number (e.g. 116)
+        required: false
+        schema:
+          type: string
+      - name: docClass
+        in: query
+        description: 'Filter the results by overarching collection-specific categories. The values vary from collection to collection. For example, docClass in BILLS corresponds with Bill Type --e.g. s, hr, hres, sconres. CREC (the Congressional Record) has docClass by CREC section: HOUSE, SENATE, DIGEST, and EXTENSIONS'
+        required: false
+        schema:
+          type: string
+      - name: billVersion
+        in: query
+        description: Filter the results by overarching collection-specific categories.
+        required: false
+        schema:
+          type: string
+          enum:
+          - as
+          - ash
+          - ath
+          - ats
+          - cdh
+          - cds
+          - cph
+          - cps
+          - eah
+          - eas
+          - eh
+          - enr
+          - eph
+          - es
+          - fah
+          - fph
+          - fps
+          - hdh
+          - hds
+          - ih
+          - iph
+          - ips
+          - is
+          - lth
+          - lts
+          - nat
+          - oph
+          - ops
+          - pap
+          - pav
+          - pch
+          - pcs
+          - pp
+          - pwah
+          - rah
+          - ras
+          - rch
+          - rcs
+          - rdh
+          - rds
+          - re
+          - reah
+          - renr
+          - res
+          - rfh
+          - rfs
+          - rft
+          - rh
+          - rhuc
+          - rih
+          - ris
+          - rs
+          - rth
+          - rts
+          - s_p
+          - sas
+          - sc
+          - mostrecent
+      - name: modifiedSince
+        in: query
+        description: equivalent to the lastModifiedStartDate parameter in the collections service which is based on lastModified- allows you to request only packages that have been modified since a given date/time - useful for tracking updates. Requires ISO 8601 format -- e.g. 2020-02-28T00:00:00Z
+        required: false
+        schema:
+          type: string
+      - name: courtCode
+        in: query
+        required: false
+        schema:
+          pattern: (?:AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FL|GA|GU|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PA|PR|RI|SC|SD|TN|TX|UT|VT|VA|VI|WA|WV|WI|WY)[n|e|w|s]?[d|b|a]|(cofc|jpml)
+          type: string
+      - name: courtType
+        in: query
+        required: false
+        schema:
+          pattern: District|Bankruptcy|Appellate|National
+          type: string
+      - name: state
+        in: query
+        required: false
+        schema:
+          pattern: AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FL|GA|GU|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PA|PR|RI|SC|SD|TN|TX|UT|VT|VA|VI|WA|WV|WI|WY
+          type: string
+      - name: topic
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: natureSuitCode
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: natureSuit
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: isGLP
+        in: query
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionContainer'
+      security:
+      - apiKeyScheme: []
+components:
+  schemas:
+    CollectionContainer:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+        message:
+          type: string
+        nextPage:
+          type: string
+        previousPage:
+          type: string
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageInfo'
+    PackageInfo:
+      type: object
+      properties:
+        packageId:
+          type: string
+        lastModified:
+          type: string
+        packageLink:
+          type: string
+        docClass:
+          type: string
+        title:
+          type: string
+        congress:
+          type: string
+        dateIssued:
+          type: string
+  securitySchemes:
+    apiKeyScheme:
+      type: apiKey
+      name: api_key
+      in: query

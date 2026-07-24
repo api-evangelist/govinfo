@@ -1,0 +1,510 @@
+openapi: 3.0.1
+info:
+  title: GovInfo Collections API
+  description: The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.
+  contact:
+    name: Developer Hub
+    url: https://github.com/usgpo/api
+  license:
+    name: License
+    url: https://github.com/usgpo/api/blob/master/LICENSE.md
+  version: '2.0'
+servers:
+- url: https://api.govinfo.gov
+  description: GovInfo API production server
+tags:
+- name: Collections
+  description: Discover new and updated documents based on GovInfo lastModified date/time
+paths:
+  /collections:
+    get:
+      tags:
+      - Collections
+      summary: Request list of collections. Response includes collectionCode,collectionName, package and granule counts
+      operationId: getCollectionSummary
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionSummary'
+      security:
+      - apiKeyScheme: []
+  /collections/{collection}/{lastModifiedStartDate}:
+    get:
+      tags:
+      - Collections
+      summary: Retrieve new or updated packages for a collection given a start date and time
+      operationId: getModifiedCollections
+      parameters:
+      - name: collection
+        in: path
+        description: The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)
+        required: true
+        schema:
+          type: string
+          enum:
+          - BILLS
+          - BILLSTATUS
+          - BUDGET
+          - CCAL
+          - CDIR
+          - CDOC
+          - CFR
+          - CHRG
+          - CMR
+          - COMPS
+          - CPD
+          - CPRT
+          - CREC
+          - CRECB
+          - CRI
+          - CRPT
+          - CZIC
+          - ECFR
+          - ECONI
+          - ERIC
+          - ERP
+          - FR
+          - GAOREPORTS
+          - GOVMAN
+          - GOVPUB
+          - GPO
+          - HJOURNAL
+          - HMAN
+          - HOB
+          - LSA
+          - PAI
+          - PLAW
+          - PPP
+          - SERIALSET
+          - SJOURNAL
+          - SMAN
+          - STATUTE
+          - USCODE
+          - USCOURTS
+          - USREPORTS
+      - name: lastModifiedStartDate
+        in: path
+        description: 'This is the start date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+        required: true
+        schema:
+          pattern: \d{4}-\d{1,2}-\d{1,2}T\d{1,2}:\d{1,2}:\d{1,2}Z
+          type: string
+      - name: offsetMark
+        in: query
+        description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the results. For the first request, use * - for subsequent requests, this information will be provided in the nextPage field of the current response.
+        required: false
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: 'This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated and will be removed in the future. Please begin transitioning to use offsetMark instead. For more information see the deprecation warning announcement and discussion on this <a href="https://github.com/usgpo/api/issues/187" target="blank"> GitHub issue (usgpo/api #187) <i class="bi bi-github"></i></a>'
+        required: false
+        deprecated: true
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        description: The number of records to return for a given request. Max value is 1000
+        required: true
+        schema:
+          maximum: 1000
+          type: integer
+      - name: congress
+        in: query
+        description: Filters results by Congress, where applicable. For example 113 or 114.
+        required: false
+        schema:
+          type: integer
+      - name: docClass
+        in: query
+        description: Filter the results by overarching collection-specific categories. The values vary from collection to collection. For example, docClass in BILLS corresponds with Bill Type --e.g. s, hr, hres, sconres.
+        required: false
+        schema:
+          type: string
+      - name: billVersion
+        in: query
+        description: Filter the results by overarching collection-specific categories.
+        required: false
+        schema:
+          type: string
+          enum:
+          - as
+          - ash
+          - ath
+          - ats
+          - cdh
+          - cds
+          - cph
+          - cps
+          - eah
+          - eas
+          - eh
+          - enr
+          - eph
+          - es
+          - fah
+          - fph
+          - fps
+          - hdh
+          - hds
+          - ih
+          - iph
+          - ips
+          - is
+          - lth
+          - lts
+          - nat
+          - oph
+          - ops
+          - pap
+          - pav
+          - pch
+          - pcs
+          - pp
+          - pwah
+          - rah
+          - ras
+          - rch
+          - rcs
+          - rdh
+          - rds
+          - re
+          - reah
+          - renr
+          - res
+          - rfh
+          - rfs
+          - rft
+          - rh
+          - rhuc
+          - rih
+          - ris
+          - rs
+          - rth
+          - rts
+          - s_p
+          - sas
+          - sc
+          - mostrecent
+      - name: courtCode
+        in: query
+        required: false
+        schema:
+          pattern: (?:(?:al|ak|as|az|ar|ca|co|ct|de|dc|fl|ga|gu|hi|id|il|in|ia|ks|ky|la|me|md|ma|mi|mn|ms|mo|mt|ne|nv|nh|nj|nm|ny|nc|nd|mp|oh|ok|or|pa|pr|ri|sc|sd|tn|tx|ut|vt|va|vi|wa|wv|wi|wy)[n|e|w|s]?[d|b|a])|(cit|ca\d{1,2})|(cofc|jpml)
+          type: string
+      - name: courtType
+        in: query
+        required: false
+        schema:
+          pattern: District|Bankruptcy|Appellate|National
+          type: string
+      - name: state
+        in: query
+        required: false
+        schema:
+          pattern: AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FL|GA|GU|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PA|PR|RI|SC|SD|TN|TX|UT|VT|VA|VI|WA|WV|WI|WY
+          type: string
+      - name: topic
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: isGLP
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: natureSuitCode
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: natureSuit
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionContainer'
+      security:
+      - apiKeyScheme: []
+  /collections/{collection}/{lastModifiedStartDate}/{lastModifiedEndDate}:
+    get:
+      tags:
+      - Collections
+      summary: Retrieve new or updated packages for a collection within a date range
+      operationId: getModifiedCollections_1
+      parameters:
+      - name: collection
+        in: path
+        description: The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)
+        required: true
+        schema:
+          type: string
+          enum:
+          - BILLS
+          - BILLSTATUS
+          - BUDGET
+          - CCAL
+          - CDIR
+          - CDOC
+          - CFR
+          - CHRG
+          - CMR
+          - COMPS
+          - CPD
+          - CPRT
+          - CREC
+          - CRECB
+          - CRI
+          - CRPT
+          - CZIC
+          - ECFR
+          - ECONI
+          - ERIC
+          - ERP
+          - FR
+          - GAOREPORTS
+          - GOVMAN
+          - GOVPUB
+          - GPO
+          - HJOURNAL
+          - HMAN
+          - HOB
+          - LSA
+          - PAI
+          - PLAW
+          - PPP
+          - SERIALSET
+          - SJOURNAL
+          - SMAN
+          - STATUTE
+          - USCODE
+          - USCOURTS
+          - USREPORTS
+      - name: lastModifiedStartDate
+        in: path
+        description: 'This is the start date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+        required: true
+        schema:
+          pattern: \d{4}-\d{1,2}-\d{1,2}T\d{1,2}:\d{1,2}:\d{1,2}Z
+          type: string
+      - name: lastModifiedEndDate
+        in: path
+        description: 'This is the end date and time in ISO8601 format (yyyy-MM-dd''T''HH:mm:ss''Z'') Example: 2018-01-28T20:18:10Z'
+        required: true
+        schema:
+          pattern: \d{4}-\d{1,2}-\d{1,2}T\d{1,2}:\d{1,2}:\d{1,2}Z
+          type: string
+      - name: offsetMark
+        in: query
+        description: Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the results. For the first request, use * - for subsequent requests, this information will be provided in the nextPage field of the current response.
+        required: false
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: 'This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated and will be removed in the future. Please begin transitioning to use offsetMark instead. For more information see the deprecation warning announcement and discussion on this <a href="https://github.com/usgpo/api/issues/187" target="blank"> GitHub issue (usgpo/api #187) <i class="bi bi-github"></i></a>'
+        required: false
+        deprecated: true
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        description: The number of records to return for a given request. Max value is 1000
+        required: true
+        schema:
+          maximum: 1000
+          type: integer
+      - name: docClass
+        in: query
+        description: Filter the results by overarching collection-specific categories. The values vary from collection to collection. For example, docClass in BILLS corresponds with Bill Type --e.g. s, hr, hres, sconres.
+        required: false
+        schema:
+          type: string
+      - name: congress
+        in: query
+        description: Filters results by Congress, where applicable. For example 113 or 114.
+        required: false
+        schema:
+          type: integer
+      - name: billVersion
+        in: query
+        description: Filter the results by overarching collection-specific categories.
+        required: false
+        schema:
+          type: string
+          enum:
+          - as
+          - ash
+          - ath
+          - ats
+          - cdh
+          - cds
+          - cph
+          - cps
+          - eah
+          - eas
+          - eh
+          - enr
+          - eph
+          - es
+          - fah
+          - fph
+          - fps
+          - hdh
+          - hds
+          - ih
+          - iph
+          - ips
+          - is
+          - lth
+          - lts
+          - nat
+          - oph
+          - ops
+          - pap
+          - pav
+          - pch
+          - pcs
+          - pp
+          - pwah
+          - rah
+          - ras
+          - rch
+          - rcs
+          - rdh
+          - rds
+          - re
+          - reah
+          - renr
+          - res
+          - rfh
+          - rfs
+          - rft
+          - rh
+          - rhuc
+          - rih
+          - ris
+          - rs
+          - rth
+          - rts
+          - s_p
+          - sas
+          - sc
+          - mostrecent
+      - name: courtCode
+        in: query
+        required: false
+        schema:
+          pattern: (?:(?:al|ak|as|az|ar|ca|co|ct|de|dc|fl|ga|gu|hi|id|il|in|ia|ks|ky|la|me|md|ma|mi|mn|ms|mo|mt|ne|nv|nh|nj|nm|ny|nc|nd|mp|oh|ok|or|pa|pr|ri|sc|sd|tn|tx|ut|vt|va|vi|wa|wv|wi|wy)[n|e|w|s]?[d|b|a])|(cit|ca\d{1,2})|(cofc|jpml)
+          type: string
+      - name: courtType
+        in: query
+        required: false
+        schema:
+          pattern: District|Bankruptcy|Appellate|National
+          type: string
+      - name: state
+        in: query
+        required: false
+        schema:
+          pattern: AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FL|GA|GU|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PA|PR|RI|SC|SD|TN|TX|UT|VT|VA|VI|WA|WV|WI|WY
+          type: string
+      - name: topic
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: isGLP
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: natureSuitCode
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: natureSuit
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionContainer'
+      security:
+      - apiKeyScheme: []
+components:
+  schemas:
+    CollectionContainer:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+        message:
+          type: string
+        nextPage:
+          type: string
+        previousPage:
+          type: string
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageInfo'
+    SummaryItem:
+      type: object
+      properties:
+        collectionCode:
+          type: string
+        collectionName:
+          type: string
+        packageCount:
+          type: integer
+          format: int64
+        granuleCount:
+          type: integer
+          format: int64
+    PackageInfo:
+      type: object
+      properties:
+        packageId:
+          type: string
+        lastModified:
+          type: string
+        packageLink:
+          type: string
+        docClass:
+          type: string
+        title:
+          type: string
+        congress:
+          type: string
+        dateIssued:
+          type: string
+    CollectionSummary:
+      type: object
+      properties:
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/SummaryItem'
+  securitySchemes:
+    apiKeyScheme:
+      type: apiKey
+      name: api_key
+      in: query
