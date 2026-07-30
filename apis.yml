@@ -5,7 +5,20 @@ description: >-
   The GovInfo API, provided by the U.S. Government Publishing Office (GPO), provides services for developers and
   webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items,
   and published documents.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/govinfo.png
 type: Index
 access: 3rd-Party
 position: Consuming
@@ -19,28 +32,97 @@ created: '2024-11-14'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: govinfo:govinfo
-    name: GovInfo API
-    description: >-
-      The GovInfo API exposes search, package, granule, collection, related-item, and published-document endpoints for
-      accessing U.S. federal government publications and their metadata.
-    humanURL: https://api.govinfo.gov/docs/
-    baseURL: https://api.govinfo.gov
-    tags:
-      - Documents
-      - Federal Government
-      - Search
-    properties:
-      - type: Documentation
-        url: https://api.govinfo.gov/docs/
-      - type: GettingStarted
-        url: https://www.govinfo.gov/developers
-      - type: Signup
-        url: https://www.govinfo.gov/api-signup
-      - type: GitHub
-        url: https://github.com/usgpo/api
-      - type: OpenAPI
-        url: openapi/openapi.yml
+- aid: govinfo:govinfo-collections-api
+  name: GovInfo Collections API
+  description: Discover new and updated documents based on GovInfo lastModified date/time
+  humanURL: https://api.govinfo.gov/docs/
+  baseURL: https://api.govinfo.gov
+  tags:
+  - Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/govinfo-collections-api-openapi.yml
+  - type: Documentation
+    url: https://api.govinfo.gov/docs/
+  - type: GettingStarted
+    url: https://www.govinfo.gov/developers
+  - type: Signup
+    url: https://www.govinfo.gov/api-signup
+  - type: GitHub
+    url: https://github.com/usgpo/api
+- aid: govinfo:govinfo-packages-api
+  name: GovInfo Packages API
+  description: Return content and metadata for individual packages
+  humanURL: https://api.govinfo.gov/docs/
+  baseURL: https://api.govinfo.gov
+  tags:
+  - Packages
+  properties:
+  - type: OpenAPI
+    url: openapi/govinfo-packages-api-openapi.yml
+  - type: Documentation
+    url: https://api.govinfo.gov/docs/
+  - type: GettingStarted
+    url: https://www.govinfo.gov/developers
+  - type: Signup
+    url: https://www.govinfo.gov/api-signup
+  - type: GitHub
+    url: https://github.com/usgpo/api
+- aid: govinfo:govinfo-published-api
+  name: GovInfo Published API
+  description: Discover documents on GovInfo based on official publication date
+  humanURL: https://api.govinfo.gov/docs/
+  baseURL: https://api.govinfo.gov
+  tags:
+  - Published
+  properties:
+  - type: OpenAPI
+    url: openapi/govinfo-published-api-openapi.yml
+  - type: Documentation
+    url: https://api.govinfo.gov/docs/
+  - type: GettingStarted
+    url: https://www.govinfo.gov/developers
+  - type: Signup
+    url: https://www.govinfo.gov/api-signup
+  - type: GitHub
+    url: https://github.com/usgpo/api
+- aid: govinfo:govinfo-related-api
+  name: GovInfo Related API
+  description: Discover relationships between documents available on GovInfo
+  humanURL: https://api.govinfo.gov/docs/
+  baseURL: https://api.govinfo.gov
+  tags:
+  - Related
+  properties:
+  - type: OpenAPI
+    url: openapi/govinfo-related-api-openapi.yml
+  - type: Documentation
+    url: https://api.govinfo.gov/docs/
+  - type: GettingStarted
+    url: https://www.govinfo.gov/developers
+  - type: Signup
+    url: https://www.govinfo.gov/api-signup
+  - type: GitHub
+    url: https://github.com/usgpo/api
+- aid: govinfo:govinfo-search-api
+  name: GovInfo Search API
+  description: >-
+    Discover documents on GovInfo using search queries and field operators available in the GovInfo UI
+  humanURL: https://api.govinfo.gov/docs/
+  baseURL: https://api.govinfo.gov
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/govinfo-search-api-openapi.yml
+  - type: Documentation
+    url: https://api.govinfo.gov/docs/
+  - type: GettingStarted
+    url: https://www.govinfo.gov/developers
+  - type: Signup
+    url: https://www.govinfo.gov/api-signup
+  - type: GitHub
+    url: https://github.com/usgpo/api
 common:
   - type: AgenticAccess
     url: agentic-access/govinfo-agentic-access.yml
