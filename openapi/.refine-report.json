@@ -1,0 +1,22 @@
+{
+  "provider": "govinfo",
+  "sources": [
+    "govinfo-collections-api-openapi.yml",
+    "govinfo-packages-api-openapi.yml",
+    "govinfo-published-api-openapi.yml",
+    "govinfo-related-api-openapi.yml",
+    "govinfo-search-api-openapi.yml"
+  ],
+  "outputs": [
+    "govinfo-collections-api-openapi.yml",
+    "govinfo-packages-api-openapi.yml",
+    "govinfo-published-api-openapi.yml",
+    "govinfo-related-api-openapi.yml",
+    "govinfo-search-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
