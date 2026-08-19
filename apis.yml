@@ -30,7 +30,7 @@ tags:
   - Open Data
 created: '2024-11-14'
 modified: '2026-05-19'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: govinfo:govinfo-collections-api
   name: GovInfo Collections API
