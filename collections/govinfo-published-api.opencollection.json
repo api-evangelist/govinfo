@@ -1,0 +1,240 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GovInfo Collections Published API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Published",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve list of packages based on dateIssued value",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.govinfo.gov/published/:dateIssuedStartDate",
+            "params": [
+              {
+                "name": "dateIssuedStartDate",
+                "value": "",
+                "type": "path",
+                "description": "The earliest dateIssued requested - YYYY-MM-DD"
+              },
+              {
+                "name": "offsetMark",
+                "value": "",
+                "type": "query",
+                "description": "Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the results. For the first request, use * - for subsequent requests, this information will be provided in the nextPage field of the current response."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated and will be removed in the future. Please begin transitioning to use offsetMark instead. For more information see the deprecation warning announcement and discussion on this <a href=\"https://github.com/usgpo/api/issues/187\" target=\"blank\"> GitHub issue (usgpo/api #187) <i class=\"bi bi-github\"></i></a>"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The number of records to return for a given request. Max value is 1000"
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "query",
+                "description": "comma-separated list of collections that you are requesting, e.g. https://api.govinfo.gov/published/2019-01-01/2019-12-31?offset=0&pageSize=100&collection=BILLS,BILLSTATUS&api_key=DEMO_KEY - see /collections for a list of collections by code and human-readable name."
+              },
+              {
+                "name": "congress",
+                "value": "",
+                "type": "query",
+                "description": "congress number (e.g. 116)"
+              },
+              {
+                "name": "docClass",
+                "value": "",
+                "type": "query",
+                "description": "Filter the results by overarching collection-specific categories. The values vary from collection to collection. For example, docClass in BILLS corresponds with Bill Type --e.g. s, hr, hres, sconres. CREC (the Congressional Record) has docClass by CREC section: HOUSE, SENATE, DIGEST, and EXTENSIONS"
+              },
+              {
+                "name": "billVersion",
+                "value": "",
+                "type": "query",
+                "description": "Filter the results by overarching collection-specific categories."
+              },
+              {
+                "name": "modifiedSince",
+                "value": "",
+                "type": "query",
+                "description": "equivalent to the lastModifiedStartDate parameter in the collections service which is based on lastModified- allows you to request only packages that have been modified since a given date/time - useful for tracking updates. Requires ISO 8601 format -- e.g. 2020-02-28T00:00:00Z"
+              },
+              {
+                "name": "courtCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "courtType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "topic",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isGLP",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "natureSuitCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "natureSuit",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieve list of packages based on dateIssued value"
+        },
+        {
+          "info": {
+            "name": "Retrieve list of packages based on dateIssued value range",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.govinfo.gov/published/:dateIssuedStartDate/:dateIssuedEndDate",
+            "params": [
+              {
+                "name": "dateIssuedStartDate",
+                "value": "",
+                "type": "path",
+                "description": "The earliest dateIssued requested - YYYY-MM-DD"
+              },
+              {
+                "name": "dateIssuedEndDate",
+                "value": "",
+                "type": "path",
+                "description": "The last dateIssued requested - YYYY-MM-DD"
+              },
+              {
+                "name": "offsetMark",
+                "value": "",
+                "type": "query",
+                "description": "Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the results. For the first request, use * - for subsequent requests, this information will be provided in the nextPage field of the current response."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated and will be removed in the future. Please begin transitioning to use offsetMark instead. For more information see the deprecation warning announcement and discussion on this <a href=\"https://github.com/usgpo/api/issues/187\" target=\"blank\"> GitHub issue (usgpo/api #187) <i class=\"bi bi-github\"></i></a>"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The number of records to return for a given request. Max value is 1000"
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "query",
+                "description": "comma-separated list of collections that you are requesting, e.g. https://api.govinfo.gov/published/2019-01-01/2019-12-31?offset=0&pageSize=100&collection=BILLS,BILLSTATUS&api_key=DEMO_KEY - see /collections for a list of collections by code and human-readable name."
+              },
+              {
+                "name": "congress",
+                "value": "",
+                "type": "query",
+                "description": "congress number (e.g. 116)"
+              },
+              {
+                "name": "docClass",
+                "value": "",
+                "type": "query",
+                "description": "Filter the results by overarching collection-specific categories. The values vary from collection to collection. For example, docClass in BILLS corresponds with Bill Type --e.g. s, hr, hres, sconres. CREC (the Congressional Record) has docClass by CREC section: HOUSE, SENATE, DIGEST, and EXTENSIONS"
+              },
+              {
+                "name": "billVersion",
+                "value": "",
+                "type": "query",
+                "description": "Filter the results by overarching collection-specific categories."
+              },
+              {
+                "name": "modifiedSince",
+                "value": "",
+                "type": "query",
+                "description": "equivalent to the lastModifiedStartDate parameter in the collections service which is based on lastModified- allows you to request only packages that have been modified since a given date/time - useful for tracking updates. Requires ISO 8601 format -- e.g. 2020-02-28T00:00:00Z"
+              },
+              {
+                "name": "courtCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "courtType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "topic",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "natureSuitCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "natureSuit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isGLP",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieve list of packages based on dateIssued value range"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

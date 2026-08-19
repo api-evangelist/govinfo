@@ -1,0 +1,279 @@
+{
+  "item": [
+    {
+      "id": "0cd4fb4b-0e6d-4f7b-85a7-d9247cfab407",
+      "name": "Related",
+      "description": {
+        "content": "Discover relationships between documents available on GovInfo",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7c8ca9b5-5765-4f0a-95b2-7117f03eec1e",
+          "name": "Get a list of relationships for a given accessId",
+          "request": {
+            "name": "Get a list of relationships for a given accessId",
+            "description": {},
+            "url": {
+              "path": [
+                "related",
+                ":accessId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accessId",
+                  "description": "(Required) The unique accessId (packageId or granuleId) for a given piece of GovInfo content"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0c397d6f-df06-4574-8ccf-ff93dc6c96cb",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "related",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accessId",
+                      "description": "(Required) The unique accessId (packageId or granuleId) for a given piece of GovInfo content"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7f6e11a-436d-4a9f-8bf9-7c308f6811dd",
+          "name": "Get a list of relationships for a given accessId",
+          "request": {
+            "name": "Get a list of relationships for a given accessId",
+            "description": {},
+            "url": {
+              "path": [
+                "related",
+                ":accessId",
+                ":collection"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "granuleClass",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subGranuleClass",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accessId",
+                  "description": "(Required) The unique accessId (packageId or granuleId) for a given piece of GovInfo content"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collection",
+                  "description": "(Required) CollectionCode associated with a given relationshp - e.g. BILLS would display all related Bill Versions"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6381e36d-8bea-40bc-864d-feb5e72d2f6b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "related",
+                    ":accessId",
+                    ":collection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "granuleClass",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subGranuleClass",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accessId",
+                      "description": "(Required) The unique accessId (packageId or granuleId) for a given piece of GovInfo content"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collection",
+                      "description": "(Required) CollectionCode associated with a given relationshp - e.g. BILLS would display all related Bill Versions"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.govinfo.gov",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e0ac38f9-1c4a-47de-ad47-6a998f5e1c5e",
+    "name": "GovInfo Collections Related API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.\n\nContact Support:\n Name: Developer Hub",
+      "type": "text/plain"
+    }
+  }
+}

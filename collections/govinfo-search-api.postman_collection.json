@@ -1,0 +1,270 @@
+{
+  "item": [
+    {
+      "id": "a566fc05-3e4c-4d23-930a-6c1bc23d8ac3",
+      "name": "Search",
+      "description": {
+        "content": "Discover documents on GovInfo using search queries and field operators available in the GovInfo UI",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c9e40f82-4eed-4d2f-884e-82fce20b3051",
+          "name": "search",
+          "request": {
+            "name": "search",
+            "description": {
+              "content": "This service can be used to query the GovInfo search engine and return results that are the equivalent to what is returned by the main user interface. You can use field operators, such as congress, publishdate, branch, and others to construct complex queries that will return only matching documents. For additional information, please see our <a href='https://www.govinfo.gov/features/search-service-overview' target='blank' style='text-decoration:underline'>search service overview</a>.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"pageSize\": \"<integer>\",\n  \"offsetMark\": \"<string>\",\n  \"sorts\": [\n    {\n      \"field\": \"<string>\",\n      \"sortOrder\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"sortOrder\": \"<string>\"\n    }\n  ],\n  \"historical\": \"<boolean>\",\n  \"resultLevel\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "28f25c97-e222-4a9c-81bf-aeddc39b69b2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Federal documents\",\n  \"pageSize\": 10,\n  \"offsetMark\": \"*\",\n  \"sorts\": [\n    {\n      \"field\": \"relevancy\",\n      \"sortOrder\": \"DESC\"\n    }\n  ],\n  \"historical\": true,\n  \"resultLevel\": \"default\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"title\": \"string\",\n      \"packageId\": \"string\",\n      \"granuleId\": \"string\",\n      \"lastModified\": \"string\",\n      \"governmentAuthor\": [\n        \"string\",\n        \"string\"\n      ],\n      \"dateIssued\": \"string\",\n      \"collectionCode\": \"string\",\n      \"resultLink\": \"string\",\n      \"dateIngested\": \"string\",\n      \"download\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"relatedLink\": \"string\"\n    },\n    {\n      \"title\": \"string\",\n      \"packageId\": \"string\",\n      \"granuleId\": \"string\",\n      \"lastModified\": \"string\",\n      \"governmentAuthor\": [\n        \"string\",\n        \"string\"\n      ],\n      \"dateIssued\": \"string\",\n      \"collectionCode\": \"string\",\n      \"resultLink\": \"string\",\n      \"dateIngested\": \"string\",\n      \"download\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"relatedLink\": \"string\"\n    }\n  ],\n  \"offsetMark\": \"string\",\n  \"count\": 7983\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cb44417-a7fb-44d6-8f78-bc1f71f73deb",
+              "name": "When the input request criteria is not following the spec",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Federal documents\",\n  \"pageSize\": 10,\n  \"offsetMark\": \"*\",\n  \"sorts\": [\n    {\n      \"field\": \"relevancy\",\n      \"sortOrder\": \"DESC\"\n    }\n  ],\n  \"historical\": true,\n  \"resultLevel\": \"default\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "11606ad6-eabd-4ef4-950f-c22492b51ebf",
+              "name": "No Content found for a given search criteria",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Federal documents\",\n  \"pageSize\": 10,\n  \"offsetMark\": \"*\",\n  \"sorts\": [\n    {\n      \"field\": \"relevancy\",\n      \"sortOrder\": \"DESC\"\n    }\n  ],\n  \"historical\": true,\n  \"resultLevel\": \"default\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2d0a2951-4ddc-4a88-a9d1-a465b80b0da4",
+              "name": "Any system failure while processing the search request /query",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Federal documents\",\n  \"pageSize\": 10,\n  \"offsetMark\": \"*\",\n  \"sorts\": [\n    {\n      \"field\": \"relevancy\",\n      \"sortOrder\": \"DESC\"\n    }\n  ],\n  \"historical\": true,\n  \"resultLevel\": \"default\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.govinfo.gov",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0abd9144-dc53-42c9-85c6-327a6c59f8ef",
+    "name": "GovInfo Collections Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.\n\nContact Support:\n Name: Developer Hub",
+      "type": "text/plain"
+    }
+  }
+}

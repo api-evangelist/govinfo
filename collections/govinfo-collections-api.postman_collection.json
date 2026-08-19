@@ -1,0 +1,628 @@
+{
+  "item": [
+    {
+      "id": "a70057aa-13b4-4e77-a6c1-e9a1eb375c34",
+      "name": "Collections",
+      "description": {
+        "content": "Discover new and updated documents based on GovInfo lastModified date/time",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "667ed888-0bf2-4f62-b877-d5349217be2c",
+          "name": "Request list of collections. Response includes collectionCode,collectionName, package and granule counts",
+          "request": {
+            "name": "Request list of collections. Response includes collectionCode,collectionName, package and granule counts",
+            "description": {},
+            "url": {
+              "path": [
+                "collections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e01459e5-938d-4d64-a7a9-8b75c4cdbac3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"collections\": [\n    {\n      \"collectionCode\": \"string\",\n      \"collectionName\": \"string\",\n      \"packageCount\": 9204,\n      \"granuleCount\": 3482\n    },\n    {\n      \"collectionCode\": \"string\",\n      \"collectionName\": \"string\",\n      \"packageCount\": 616,\n      \"granuleCount\": 4998\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "30af3300-c8a6-4988-aa66-33061a323c84",
+          "name": "Retrieve new or updated packages for a collection given a start date and time",
+          "request": {
+            "name": "Retrieve new or updated packages for a collection given a start date and time",
+            "description": {},
+            "url": {
+              "path": [
+                "collections",
+                ":collection",
+                ":lastModifiedStartDate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offsetMark",
+                  "value": "<string>",
+                  "description": "Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the results. For the first request, use * - for subsequent requests, this information will be provided in the nextPage field of the current response."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated and will be removed in the future. Please begin transitioning to use offsetMark instead. For more information see the deprecation warning announcement and discussion on this <a href=\"https://github.com/usgpo/api/issues/187\" target=\"blank\"> GitHub issue (usgpo/api #187) <i class=\"bi bi-github\"></i></a>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "(Required) The number of records to return for a given request. Max value is 1000"
+                },
+                {
+                  "disabled": false,
+                  "key": "congress",
+                  "value": "<integer>",
+                  "description": "Filters results by Congress, where applicable. For example 113 or 114."
+                },
+                {
+                  "disabled": false,
+                  "key": "docClass",
+                  "value": "<string>",
+                  "description": "Filter the results by overarching collection-specific categories. The values vary from collection to collection. For example, docClass in BILLS corresponds with Bill Type --e.g. s, hr, hres, sconres."
+                },
+                {
+                  "disabled": false,
+                  "key": "billVersion",
+                  "value": "<string>",
+                  "description": "Filter the results by overarching collection-specific categories."
+                },
+                {
+                  "disabled": false,
+                  "key": "courtCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "courtType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "topic",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "isGLP",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "natureSuitCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "natureSuit",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collection",
+                  "description": "(Required) The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "lastModifiedStartDate",
+                  "description": "(Required) This is the start date and time in ISO8601 format (yyyy-MM-dd'T'HH:mm:ss'Z') Example: 2018-01-28T20:18:10Z"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "523ec198-7003-44b4-8566-1f8d51d12cad",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collection",
+                    ":lastModifiedStartDate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offsetMark",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "congress",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "docClass",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "billVersion",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "courtCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "courtType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "topic",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isGLP",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "natureSuitCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "natureSuit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collection",
+                      "description": "(Required) The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lastModifiedStartDate",
+                      "description": "(Required) This is the start date and time in ISO8601 format (yyyy-MM-dd'T'HH:mm:ss'Z') Example: 2018-01-28T20:18:10Z"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 7539,\n  \"message\": \"string\",\n  \"nextPage\": \"string\",\n  \"previousPage\": \"string\",\n  \"packages\": [\n    {\n      \"packageId\": \"string\",\n      \"lastModified\": \"string\",\n      \"packageLink\": \"string\",\n      \"docClass\": \"string\",\n      \"title\": \"string\",\n      \"congress\": \"string\",\n      \"dateIssued\": \"string\"\n    },\n    {\n      \"packageId\": \"string\",\n      \"lastModified\": \"string\",\n      \"packageLink\": \"string\",\n      \"docClass\": \"string\",\n      \"title\": \"string\",\n      \"congress\": \"string\",\n      \"dateIssued\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "acb9856d-59b1-4e56-abc8-f7c025931bc8",
+          "name": "Retrieve new or updated packages for a collection within a date range",
+          "request": {
+            "name": "Retrieve new or updated packages for a collection within a date range",
+            "description": {},
+            "url": {
+              "path": [
+                "collections",
+                ":collection",
+                ":lastModifiedStartDate",
+                ":lastModifiedEndDate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offsetMark",
+                  "value": "<string>",
+                  "description": "Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the results. For the first request, use * - for subsequent requests, this information will be provided in the nextPage field of the current response."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated and will be removed in the future. Please begin transitioning to use offsetMark instead. For more information see the deprecation warning announcement and discussion on this <a href=\"https://github.com/usgpo/api/issues/187\" target=\"blank\"> GitHub issue (usgpo/api #187) <i class=\"bi bi-github\"></i></a>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "(Required) The number of records to return for a given request. Max value is 1000"
+                },
+                {
+                  "disabled": false,
+                  "key": "docClass",
+                  "value": "<string>",
+                  "description": "Filter the results by overarching collection-specific categories. The values vary from collection to collection. For example, docClass in BILLS corresponds with Bill Type --e.g. s, hr, hres, sconres."
+                },
+                {
+                  "disabled": false,
+                  "key": "congress",
+                  "value": "<integer>",
+                  "description": "Filters results by Congress, where applicable. For example 113 or 114."
+                },
+                {
+                  "disabled": false,
+                  "key": "billVersion",
+                  "value": "<string>",
+                  "description": "Filter the results by overarching collection-specific categories."
+                },
+                {
+                  "disabled": false,
+                  "key": "courtCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "courtType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "topic",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "isGLP",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "natureSuitCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "natureSuit",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collection",
+                  "description": "(Required) The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "lastModifiedStartDate",
+                  "description": "(Required) This is the start date and time in ISO8601 format (yyyy-MM-dd'T'HH:mm:ss'Z') Example: 2018-01-28T20:18:10Z"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "lastModifiedEndDate",
+                  "description": "(Required) This is the end date and time in ISO8601 format (yyyy-MM-dd'T'HH:mm:ss'Z') Example: 2018-01-28T20:18:10Z"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ade5bc81-683f-4f56-b844-b05404b78909",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":collection",
+                    ":lastModifiedStartDate",
+                    ":lastModifiedEndDate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offsetMark",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "docClass",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "congress",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "billVersion",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "courtCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "courtType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "topic",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isGLP",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "natureSuitCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "natureSuit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collection",
+                      "description": "(Required) The collectionCode that you want to retrieve (e.g. BILLS, CREC, FR, PLAW, USCOURTS)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lastModifiedStartDate",
+                      "description": "(Required) This is the start date and time in ISO8601 format (yyyy-MM-dd'T'HH:mm:ss'Z') Example: 2018-01-28T20:18:10Z"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lastModifiedEndDate",
+                      "description": "(Required) This is the end date and time in ISO8601 format (yyyy-MM-dd'T'HH:mm:ss'Z') Example: 2018-01-28T20:18:10Z"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 6740,\n  \"message\": \"string\",\n  \"nextPage\": \"string\",\n  \"previousPage\": \"string\",\n  \"packages\": [\n    {\n      \"packageId\": \"string\",\n      \"lastModified\": \"string\",\n      \"packageLink\": \"string\",\n      \"docClass\": \"string\",\n      \"title\": \"string\",\n      \"congress\": \"string\",\n      \"dateIssued\": \"string\"\n    },\n    {\n      \"packageId\": \"string\",\n      \"lastModified\": \"string\",\n      \"packageLink\": \"string\",\n      \"docClass\": \"string\",\n      \"title\": \"string\",\n      \"congress\": \"string\",\n      \"dateIssued\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.govinfo.gov",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c1901ee3-519b-44b2-b2ed-067e15445c05",
+    "name": "GovInfo Collections API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.\n\nContact Support:\n Name: Developer Hub",
+      "type": "text/plain"
+    }
+  }
+}

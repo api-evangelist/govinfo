@@ -1,0 +1,425 @@
+{
+  "item": [
+    {
+      "id": "41dbab10-b230-4f46-984f-6952af7a04c9",
+      "name": "Packages",
+      "description": {
+        "content": "Return content and metadata for individual packages",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "07f845bd-1a8e-4eb3-b2fb-aa23e9e76a9f",
+          "name": "Return json summary for specified package",
+          "request": {
+            "name": "Return json summary for specified package",
+            "description": {},
+            "url": {
+              "path": [
+                "packages",
+                ":packageId",
+                "summary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "packageId",
+                  "description": "(Required) The Package Id. Ex: CREC-2018-01-04"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4c5cbf07-cb81-439a-8d87-6d3a949e1057",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "packages",
+                    ":packageId",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "packageId",
+                      "description": "(Required) The Package Id. Ex: CREC-2018-01-04"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2e7c2dd-659e-4807-a496-6ee177c36ef7",
+          "name": "Get a list of granules associated with a package",
+          "request": {
+            "name": "Get a list of granules associated with a package",
+            "description": {},
+            "url": {
+              "path": [
+                "packages",
+                ":packageId",
+                "granules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offsetMark",
+                  "value": "<string>",
+                  "description": "Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the results. For the first request, use * - for subsequent requests, this information will be provided in the nextPage field of the current response."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated and will be removed in the future. Please begin transitioning to use offsetMark instead. For more information see the deprecation warning announcement and discussion on this <a href=\"https://github.com/usgpo/api/issues/187\" target=\"blank\"> GitHub issue (usgpo/api #187) <i class=\"bi bi-github\"></i></a>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "(Required) The number of records to return for a given request. Max value is 1000"
+                },
+                {
+                  "disabled": false,
+                  "key": "md5",
+                  "value": "<string>",
+                  "description": "md5 hash value of the html content file - can be used to identify changes in individual granules for the HOB and CRI collections."
+                },
+                {
+                  "disabled": false,
+                  "key": "granuleClass",
+                  "value": "<string>",
+                  "description": "Filter the results by overarching collection-specific categories. The values vary from collection to collection. For example, For example, granuleClass in CREC corresponds with Congressional Record Section ---e.g. . DAILYDIGEST, EXTENSIONS, SENATE, HOUSE"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "packageId",
+                  "description": "(Required) The Package Id. Ex: CREC-2018-01-04"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "79fa63ca-b961-4907-9fe4-44436a3cb1b8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "packages",
+                    ":packageId",
+                    "granules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offsetMark",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "md5",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "granuleClass",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "packageId",
+                      "description": "(Required) The Package Id. Ex: CREC-2018-01-04"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 2307,\n  \"offset\": 7387,\n  \"pageSize\": 6206,\n  \"nextPage\": \"string\",\n  \"previousPage\": \"string\",\n  \"granules\": [\n    {\n      \"title\": \"string\",\n      \"granuleId\": \"string\",\n      \"granuleLink\": \"string\",\n      \"dateIssued\": \"string\",\n      \"granuleClass\": \"string\",\n      \"md5\": \"string\"\n    },\n    {\n      \"title\": \"string\",\n      \"granuleId\": \"string\",\n      \"granuleLink\": \"string\",\n      \"dateIssued\": \"string\",\n      \"granuleClass\": \"string\",\n      \"md5\": \"string\"\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "507d5789-1903-4747-b501-63319b2f7fbe",
+          "name": "Return json summary for specified granule",
+          "request": {
+            "name": "Return json summary for specified granule",
+            "description": {},
+            "url": {
+              "path": [
+                "packages",
+                ":packageId",
+                "granules",
+                ":granuleId",
+                "summary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "packageId",
+                  "description": "(Required) The Package Id. Ex: CREC-2018-01-04"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "granuleId",
+                  "description": "(Required) The granule ID, e.g. CREC-2018-01-04-pt1-PgD7-2"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "api_key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5d5f21f0-ebc5-4d32-adb5-356b5ef252b3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "packages",
+                    ":packageId",
+                    "granules",
+                    ":granuleId",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "packageId",
+                      "description": "(Required) The Package Id. Ex: CREC-2018-01-04"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "granuleId",
+                      "description": "(Required) The granule ID, e.g. CREC-2018-01-04-pt1-PgD7-2"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.govinfo.gov",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "81f17ea9-b8c7-414d-96d8-8cc4ae21e217",
+    "name": "GovInfo Collections Packages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.\n\nContact Support:\n Name: Developer Hub",
+      "type": "text/plain"
+    }
+  }
+}

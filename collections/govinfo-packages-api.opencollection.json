@@ -1,0 +1,129 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GovInfo Collections Packages API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Packages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Return json summary for specified package",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.govinfo.gov/packages/:packageId/summary",
+            "params": [
+              {
+                "name": "packageId",
+                "value": "",
+                "type": "path",
+                "description": "The Package Id. Ex: CREC-2018-01-04"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Return json summary for specified package"
+        },
+        {
+          "info": {
+            "name": "Get a list of granules associated with a package",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.govinfo.gov/packages/:packageId/granules",
+            "params": [
+              {
+                "name": "packageId",
+                "value": "",
+                "type": "path",
+                "description": "The Package Id. Ex: CREC-2018-01-04"
+              },
+              {
+                "name": "offsetMark",
+                "value": "",
+                "type": "query",
+                "description": "Indicates starting record for a given request. Use in conjunction with pageSize to paginate through the results. For the first request, use * - for subsequent requests, this information will be provided in the nextPage field of the current response."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "This is the starting record you wish to retrieve-- 0 is the first record. This parameter is being deprecated and will be removed in the future. Please begin transitioning to use offsetMark instead. For more information see the deprecation warning announcement and discussion on this <a href=\"https://github.com/usgpo/api/issues/187\" target=\"blank\"> GitHub issue (usgpo/api #187) <i class=\"bi bi-github\"></i></a>"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The number of records to return for a given request. Max value is 1000"
+              },
+              {
+                "name": "md5",
+                "value": "",
+                "type": "query",
+                "description": "md5 hash value of the html content file - can be used to identify changes in individual granules for the HOB and CRI collections."
+              },
+              {
+                "name": "granuleClass",
+                "value": "",
+                "type": "query",
+                "description": "Filter the results by overarching collection-specific categories. The values vary from collection to collection. For example, For example, granuleClass in CREC corresponds with Congressional Record Section ---e.g. . DAILYDIGEST, EXTENSIONS, SENATE, HOUSE"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Get a list of granules associated with a package"
+        },
+        {
+          "info": {
+            "name": "Return json summary for specified granule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.govinfo.gov/packages/:packageId/granules/:granuleId/summary",
+            "params": [
+              {
+                "name": "packageId",
+                "value": "",
+                "type": "path",
+                "description": "The Package Id. Ex: CREC-2018-01-04"
+              },
+              {
+                "name": "granuleId",
+                "value": "",
+                "type": "path",
+                "description": "The granule ID, e.g. CREC-2018-01-04-pt1-PgD7-2"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Return json summary for specified granule"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

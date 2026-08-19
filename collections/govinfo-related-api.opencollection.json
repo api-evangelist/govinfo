@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "GovInfo Collections Related API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Related",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of relationships for a given accessId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.govinfo.gov/related/:accessId",
+            "params": [
+              {
+                "name": "accessId",
+                "value": "",
+                "type": "path",
+                "description": "The unique accessId (packageId or granuleId) for a given piece of GovInfo content"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Get a list of relationships for a given accessId"
+        },
+        {
+          "info": {
+            "name": "Get a list of relationships for a given accessId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.govinfo.gov/related/:accessId/:collection",
+            "params": [
+              {
+                "name": "accessId",
+                "value": "",
+                "type": "path",
+                "description": "The unique accessId (packageId or granuleId) for a given piece of GovInfo content"
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "CollectionCode associated with a given relationshp - e.g. BILLS would display all related Bill Versions"
+              },
+              {
+                "name": "granuleClass",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subGranuleClass",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Get a list of relationships for a given accessId"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
