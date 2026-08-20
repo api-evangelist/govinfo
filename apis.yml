@@ -24,6 +24,11 @@ access: 3rd-Party
 position: Consuming
 parent: government-publishing-office
 tags:
+  - Federal-Government
+  - Government Publishing
+  - Documents
+  - Open Data
+tags_raw:
   - Federal Government
   - Government Publishing
   - Documents
@@ -38,6 +43,8 @@ apis:
   humanURL: https://api.govinfo.gov/docs/
   baseURL: https://api.govinfo.gov
   tags:
+  - Collection
+  tags_raw:
   - Collections
   properties:
   - type: OpenAPI
