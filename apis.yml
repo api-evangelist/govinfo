@@ -144,6 +144,8 @@ apis:
   - type: GitHub
     url: https://github.com/usgpo/api
 common:
+  - type: Website
+    url: https://www.govinfo.gov/
   - type: AgenticAccess
     url: agentic-access/govinfo-agentic-access.yml
   - type: DomainSecurity
