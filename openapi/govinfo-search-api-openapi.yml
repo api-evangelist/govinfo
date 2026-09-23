@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: GovInfo Collections Search API
+  title: GovInfo Search API
   description: The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.
   contact:
     name: Developer Hub
@@ -20,7 +20,7 @@ paths:
     post:
       tags:
       - Search
-      description: This service can be used to query the GovInfo search engine and return results that are the equivalent to what is returned by the main user interface. You can use field operators, such as congress, publishdate, branch, and others to construct complex queries that will return only matching documents. For additional information, please see our <a href='https://www.govinfo.gov/features/search-service-overview' target='blank' style='text-decoration:underline'>search service overview</a>.
+      description: This service can be used to query the GovInfo search engine and return results that are the equivalent to what is returned by the main user interface. You can use field operators, such as congress, publishdate, branch, and others to construct complex queries that will return only matching documents. For additional information, please see our search service overview.
       operationId: search
       requestBody:
         content:
@@ -52,6 +52,8 @@ paths:
           description: Any system failure while processing the search request /query
       security:
       - apiKeyScheme: []
+      summary: Search
+      x-summary-source: derived
 components:
   schemas:
     SearchResponse:
@@ -66,34 +68,6 @@ components:
         count:
           type: integer
           format: int32
-    SearchRequest:
-      type: object
-      properties:
-        query:
-          type: string
-        pageSize:
-          type: integer
-          format: int32
-        offsetMark:
-          type: string
-        sorts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sort'
-        historical:
-          type: boolean
-        resultLevel:
-          type: string
-    Sort:
-      type: object
-      properties:
-        field:
-          type: string
-        sortOrder:
-          type: string
-          enum:
-          - ASC
-          - DESC
     SearchResult:
       type: object
       properties:
@@ -122,6 +96,34 @@ components:
           additionalProperties:
             type: string
         relatedLink:
+          type: string
+    Sort:
+      type: object
+      properties:
+        field:
+          type: string
+        sortOrder:
+          type: string
+          enum:
+          - ASC
+          - DESC
+    SearchRequest:
+      type: object
+      properties:
+        query:
+          type: string
+        pageSize:
+          type: integer
+          format: int32
+        offsetMark:
+          type: string
+        sorts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sort'
+        historical:
+          type: boolean
+        resultLevel:
           type: string
   securitySchemes:
     apiKeyScheme:

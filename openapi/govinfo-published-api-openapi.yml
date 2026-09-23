@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: GovInfo Collections Published API
+  title: GovInfo Published API
   description: The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.
   contact:
     name: Developer Hub

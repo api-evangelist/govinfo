@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: GovInfo Collections API
   description: The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.
@@ -20,7 +20,7 @@ paths:
     get:
       tags:
       - Collections
-      summary: Request list of collections. Response includes collectionCode,collectionName, package and granule counts
+      summary: Request list of collections.
       operationId: getCollectionSummary
       responses:
         '200':
@@ -466,19 +466,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PackageInfo'
-    SummaryItem:
+    CollectionSummary:
       type: object
       properties:
-        collectionCode:
-          type: string
-        collectionName:
-          type: string
-        packageCount:
-          type: integer
-          format: int64
-        granuleCount:
-          type: integer
-          format: int64
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/SummaryItem'
     PackageInfo:
       type: object
       properties:
@@ -496,13 +490,19 @@ components:
           type: string
         dateIssued:
           type: string
-    CollectionSummary:
+    SummaryItem:
       type: object
       properties:
-        collections:
-          type: array
-          items:
-            $ref: '#/components/schemas/SummaryItem'
+        collectionCode:
+          type: string
+        collectionName:
+          type: string
+        packageCount:
+          type: integer
+          format: int64
+        granuleCount:
+          type: integer
+          format: int64
   securitySchemes:
     apiKeyScheme:
       type: apiKey

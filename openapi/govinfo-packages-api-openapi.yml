@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: GovInfo Collections Packages API
+  title: GovInfo Packages API
   description: The GovInfo API provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents from the U.S. Government Publishing Office. Requires an api.data.gov API key.
   contact:
     name: Developer Hub
@@ -122,21 +122,6 @@ paths:
       - apiKeyScheme: []
 components:
   schemas:
-    GranuleMetadata:
-      type: object
-      properties:
-        title:
-          type: string
-        granuleId:
-          type: string
-        granuleLink:
-          type: string
-        dateIssued:
-          type: string
-        granuleClass:
-          type: string
-        md5:
-          type: string
     GranuleContainer:
       type: object
       properties:
@@ -158,6 +143,21 @@ components:
           items:
             $ref: '#/components/schemas/GranuleMetadata'
         message:
+          type: string
+    GranuleMetadata:
+      type: object
+      properties:
+        title:
+          type: string
+        granuleId:
+          type: string
+        granuleLink:
+          type: string
+        dateIssued:
+          type: string
+        granuleClass:
+          type: string
+        md5:
           type: string
   securitySchemes:
     apiKeyScheme:
