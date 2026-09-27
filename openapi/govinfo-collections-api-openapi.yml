@@ -466,6 +466,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PackageInfo'
+    SummaryItem:
+      type: object
+      properties:
+        collectionCode:
+          type: string
+        collectionName:
+          type: string
+        packageCount:
+          type: integer
+          format: int64
+        granuleCount:
+          type: integer
+          format: int64
     CollectionSummary:
       type: object
       properties:
@@ -490,19 +503,6 @@ components:
           type: string
         dateIssued:
           type: string
-    SummaryItem:
-      type: object
-      properties:
-        collectionCode:
-          type: string
-        collectionName:
-          type: string
-        packageCount:
-          type: integer
-          format: int64
-        granuleCount:
-          type: integer
-          format: int64
   securitySchemes:
     apiKeyScheme:
       type: apiKey

@@ -365,22 +365,6 @@ paths:
       - apiKeyScheme: []
 components:
   schemas:
-    CollectionContainer:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-        message:
-          type: string
-        nextPage:
-          type: string
-        previousPage:
-          type: string
-        packages:
-          type: array
-          items:
-            $ref: '#/components/schemas/PackageInfo'
     PackageInfo:
       type: object
       properties:
@@ -398,6 +382,22 @@ components:
           type: string
         dateIssued:
           type: string
+    CollectionContainer:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+        message:
+          type: string
+        nextPage:
+          type: string
+        previousPage:
+          type: string
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageInfo'
   securitySchemes:
     apiKeyScheme:
       type: apiKey

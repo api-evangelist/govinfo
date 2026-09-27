@@ -7,15 +7,19 @@ description: >-
   and published documents.
 deliveryModel:
   model: saas
-  open_source: false
+  license_evidence:
+    not_product:
+    - usgpo/api
+  open_source: unknown
   commercial: true
   callable_host: true
   label: Hosted service · you call their endpoint
-  confidence: high
+  confidence: low
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -37,7 +41,7 @@ access: 3rd-Party
 position: Consuming
 parent: government-publishing-office
 tags:
-  - Federal-Government
+  - Federal Government
   - Government Publishing
   - Documents
   - Open Data
@@ -46,6 +50,7 @@ tags_raw:
   - Government Publishing
   - Documents
   - Open Data
+  - Federal-Government
 created: '2024-11-14'
 modified: '2026-05-19'
 specificationVersion: '0.23'
