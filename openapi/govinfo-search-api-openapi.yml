@@ -66,6 +66,18 @@ components:
           enum:
           - ASC
           - DESC
+    SearchResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResult'
+        offsetMark:
+          type: string
+        count:
+          type: integer
+          format: int32
     SearchResult:
       type: object
       properties:
@@ -113,18 +125,6 @@ components:
           type: boolean
         resultLevel:
           type: string
-    SearchResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchResult'
-        offsetMark:
-          type: string
-        count:
-          type: integer
-          format: int32
   securitySchemes:
     apiKeyScheme:
       type: apiKey

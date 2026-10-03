@@ -466,6 +466,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PackageInfo'
+    CollectionSummary:
+      type: object
+      properties:
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/SummaryItem'
     SummaryItem:
       type: object
       properties:
@@ -479,13 +486,6 @@ components:
         granuleCount:
           type: integer
           format: int64
-    CollectionSummary:
-      type: object
-      properties:
-        collections:
-          type: array
-          items:
-            $ref: '#/components/schemas/SummaryItem'
     PackageInfo:
       type: object
       properties:
