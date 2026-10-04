@@ -450,22 +450,23 @@ paths:
       - apiKeyScheme: []
 components:
   schemas:
-    CollectionContainer:
+    PackageInfo:
       type: object
       properties:
-        count:
-          type: integer
-          format: int64
-        message:
+        packageId:
           type: string
-        nextPage:
+        lastModified:
           type: string
-        previousPage:
+        packageLink:
           type: string
-        packages:
-          type: array
-          items:
-            $ref: '#/components/schemas/PackageInfo'
+        docClass:
+          type: string
+        title:
+          type: string
+        congress:
+          type: string
+        dateIssued:
+          type: string
     CollectionSummary:
       type: object
       properties:
@@ -486,23 +487,22 @@ components:
         granuleCount:
           type: integer
           format: int64
-    PackageInfo:
+    CollectionContainer:
       type: object
       properties:
-        packageId:
+        count:
+          type: integer
+          format: int64
+        message:
           type: string
-        lastModified:
+        nextPage:
           type: string
-        packageLink:
+        previousPage:
           type: string
-        docClass:
-          type: string
-        title:
-          type: string
-        congress:
-          type: string
-        dateIssued:
-          type: string
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageInfo'
   securitySchemes:
     apiKeyScheme:
       type: apiKey

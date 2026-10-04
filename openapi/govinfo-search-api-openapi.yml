@@ -56,28 +56,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    Sort:
-      type: object
-      properties:
-        field:
-          type: string
-        sortOrder:
-          type: string
-          enum:
-          - ASC
-          - DESC
-    SearchResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchResult'
-        offsetMark:
-          type: string
-        count:
-          type: integer
-          format: int32
     SearchResult:
       type: object
       properties:
@@ -107,6 +85,18 @@ components:
             type: string
         relatedLink:
           type: string
+    SearchResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResult'
+        offsetMark:
+          type: string
+        count:
+          type: integer
+          format: int32
     SearchRequest:
       type: object
       properties:
@@ -125,6 +115,16 @@ components:
           type: boolean
         resultLevel:
           type: string
+    Sort:
+      type: object
+      properties:
+        field:
+          type: string
+        sortOrder:
+          type: string
+          enum:
+          - ASC
+          - DESC
   securitySchemes:
     apiKeyScheme:
       type: apiKey
