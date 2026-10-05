@@ -1,0 +1,12 @@
+{
+ "url": "https://api.govinfo.gov/api-docs",
+ "requested_url": "https://api.govinfo.gov/api-docs",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 28203,
+ "sha256": "eb9f8f5a0819a9a0669f71260fc7462b4d27e1d00c91113f33d8dce21e2b53a7",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
