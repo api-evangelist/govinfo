@@ -149,6 +149,12 @@ apis:
   - type: GitHub
     url: https://github.com/usgpo/api
 common:
+  - type: Plans
+    url: plans/govinfo-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/govinfo-rate-limits.yml
+  - type: FinOps
+    url: finops/govinfo-finops.yml
   - url: https://www.govinfo.gov/rss.xml
     type: BlogRSS
   - type: Website
