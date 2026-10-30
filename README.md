@@ -1,4 +1,4 @@
-# GovInfo (govinfo)
+# GovInfo
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,65 +66,124 @@
 
 The GovInfo API, provided by the U.S. Government Publishing Office (GPO), provides services for developers and webmasters to access GovInfo content and metadata, including search, packages, granules, collections, related items, and published documents.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/govinfo/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/govinfo/refs/heads/main/apis.yml)
+**Areas:** Federal Government · Government Publishing · Documents · Open Data
 
-## Scope
+## GovInfo on APIs.io
 
-- **Type:** Index
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for GovInfo is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/govinfo/](https://apis.io/providers/govinfo/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (5)
 
-- Federal Government
-- Government Publishing
-- Documents
-- Open Data
+- [GovInfo Collections API](https://apis.io/apis/govinfo/govinfo-collections-api/) — Discover new and updated documents based on GovInfo lastModified date/time
+- [GovInfo Packages API](https://apis.io/apis/govinfo/govinfo-packages-api/) — Return content and metadata for individual packages
+- [GovInfo Published API](https://apis.io/apis/govinfo/govinfo-published-api/) — Discover documents on GovInfo based on official publication date
+- [GovInfo Related API](https://apis.io/apis/govinfo/govinfo-related-api/) — Discover relationships between documents available on GovInfo
+- [GovInfo Search API](https://apis.io/apis/govinfo/govinfo-search-api/) — Discover documents on GovInfo using search queries and field operators available in the GovInfo UI
 
-## Timestamps
+### Published properties
 
-- **Created:** 2024-11-14
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### GovInfo API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The GovInfo API exposes search, package, granule, collection, related-item, and published-document endpoints for accessing U.S. federal government publications and their metadata.
+- [Govinfo Agentic Access](https://apis.io/agentic-access/govinfo/govinfo-agentic-access/)
 
-- **Human URL:** [https://api.govinfo.gov/docs/](https://api.govinfo.gov/docs/)
-- **Base URL:** `https://api.govinfo.gov`
+#### Collections (6)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- Documents
-- Federal Government
-- Search
+- [GovInfo Collections API](https://apis.io/collections/govinfo/open-govinfo-collections-api/)
+- [GovInfo Collections Packages API](https://apis.io/collections/govinfo/open-govinfo-packages-api/)
+- [GovInfo Collections Published API](https://apis.io/collections/govinfo/open-govinfo-published-api/)
+- [GovInfo Collections Related API](https://apis.io/collections/govinfo/open-govinfo-related-api/)
+- [GovInfo Collections Search API](https://apis.io/collections/govinfo/open-govinfo-search-api/)
+- [GovInfo API](https://apis.io/collections/govinfo/open-openapi/)
 
-#### Properties
+#### Security (2)
 
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Govinfo Authentication](https://apis.io/security/govinfo/govinfo-authentication/)
+- [Govinfo Domain Security](https://apis.io/security/govinfo/govinfo-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Govinfo Plans Pricing](https://apis.io/plans/govinfo/govinfo-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Govinfo Rate Limits](https://apis.io/rate-limits/govinfo/govinfo-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Govinfo Finops](https://apis.io/finops/govinfo/govinfo-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.govinfo.gov/)
 - [Documentation](https://api.govinfo.gov/docs/)
-- [Getting Started](https://www.govinfo.gov/developers)
-- [Sign Up](https://www.govinfo.gov/api-signup)
-- [Git Hub](https://github.com/usgpo/api)
-- [OpenAPI](openapi/openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/openapi.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/openapi.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Terms of service](https://www.govinfo.gov/about/policies)
+- [Privacy policy](https://www.govinfo.gov/privacy)
 
-## Common Properties
+## API Evangelist rating
 
-- [Portal](https://www.govinfo.gov)
-- [Developer Portal](https://www.govinfo.gov/developers)
-- [Documentation](https://api.govinfo.gov/docs/)
-- [Sign Up](https://www.govinfo.gov/api-signup)
-- [Git Hub](https://github.com/usgpo/api)
-- [Authentication](https://api.data.gov)
-- [License](https://github.com/usgpo/api/blob/master/LICENSE.md)
-- [Terms of Service](https://www.govinfo.gov/about/policies)
-- [Privacy Policy](https://www.govinfo.gov/privacy)
-- [Integrations](https://www.govinfo.gov/integrations)
+**Kin Score 31.0** — thin · rubric 0.24.0 · scored 2026-10-17
 
-## Maintainers
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 44.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 13.2 |
+| Developer ergonomics | 42.9 |
+| Access clarity | 21.1 |
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Agent readiness 20.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 11.8** — Government & Public Sector
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/govinfo/](https://apis.io/providers/govinfo/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for GovInfo: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/govinfo/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
